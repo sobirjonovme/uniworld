@@ -2,7 +2,9 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from apps.common.models import BaseModel, ModifiedArrayField
-from .choices import StudyTypes, QualificationLevels, InstitutionTypes, RequiredDocumentTypes, MonthChoices
+
+from .choices import (InstitutionTypes, MonthChoices, QualificationLevels,
+                      RequiredDocumentTypes, StudyTypes)
 
 
 # Create your models here.
@@ -19,12 +21,19 @@ class Specialty(BaseModel):
 
 class University(BaseModel):
     name = models.CharField(verbose_name=_("Name"), max_length=255)
+    agency = models.ForeignKey(
+        verbose_name=_("Agency"),
+        to="organizations.Agency",
+        on_delete=models.SET_NULL,
+        related_name="universities",
+        null=True,
+    )
     country = models.ForeignKey(
         verbose_name=_("Country"),
         to="common.Country",
         on_delete=models.SET_NULL,
         related_name="universities",
-        null=True
+        null=True,
     )
     institution_type = models.CharField(
         verbose_name=_("Institution type"), max_length=32, choices=InstitutionTypes.choices
@@ -34,21 +43,17 @@ class University(BaseModel):
         verbose_name=_("Intake month"),
         base_field=models.CharField(max_length=32, choices=MonthChoices.choices),
         null=True,
-        blank=True
+        blank=True,
     )
     # Costs
     tuition_fee = models.CharField(
         verbose_name=_("Tuition fee"), max_length=255, help_text=_("yearly tuition fee"), null=True, blank=True
     )
-    application_fee = models.CharField(
-        verbose_name=_("Application fee"), max_length=255, null=True, blank=True
-    )
+    application_fee = models.CharField(verbose_name=_("Application fee"), max_length=255, null=True, blank=True)
     living_cost = models.CharField(
         verbose_name=_("Living cost"), max_length=255, help_text=_("monthly living cost"), null=True, blank=True
     )
-    visa_fee = models.CharField(
-        verbose_name=_("Visa fee"), max_length=255, null=True, blank=True
-    )
+    visa_fee = models.CharField(verbose_name=_("Visa fee"), max_length=255, null=True, blank=True)
 
     class Meta:
         verbose_name = _("University")
@@ -63,7 +68,7 @@ class RequiredDocument(BaseModel):
         verbose_name=_("University"),
         to="universities.University",
         on_delete=models.CASCADE,
-        related_name="required_documents"
+        related_name="required_documents",
     )
     document_type = models.CharField(
         verbose_name=_("Document type"), max_length=32, choices=RequiredDocumentTypes.choices
@@ -88,7 +93,7 @@ class UniversityCourse(BaseModel):
         to="universities.Specialty",
         on_delete=models.SET_NULL,
         related_name="courses",
-        null=True
+        null=True,
     )
     qualification_level = models.CharField(
         verbose_name=_("Qualification level"), max_length=32, choices=QualificationLevels.choices
@@ -102,7 +107,7 @@ class UniversityCourse(BaseModel):
         verbose_name=_("Intake month"),
         base_field=models.CharField(max_length=32, choices=MonthChoices.choices),
         null=True,
-        blank=True
+        blank=True,
     )
 
     class Meta:
