@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.common.models import FrontendTranslation, VersionHistory
+from apps.common.models import FrontendTranslation, VersionHistory, Country
 
 
 @admin.register(VersionHistory)
@@ -18,3 +18,8 @@ class FrontTranslationAdmin(admin.ModelAdmin):
     list_display_links = ("id", "key")
     search_fields = ("key", "text")
     readonly_fields = ("created_at", "updated_at")
+
+
+@admin.register(Country)
+class CountryAdmin(admin.ModelAdmin):
+    pass
