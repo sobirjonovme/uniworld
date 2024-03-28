@@ -15,6 +15,7 @@ from pathlib import Path
 
 import environ
 
+from core.ckeditor_conf import *  # noqa
 from core.jazzmin_conf import *  # noqa
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

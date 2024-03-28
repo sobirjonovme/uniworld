@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from ckeditor.fields import RichTextField
 
 from apps.common.models import BaseModel, ModifiedArrayField
 
@@ -38,7 +39,7 @@ class University(BaseModel):
     institution_type = models.CharField(
         verbose_name=_("Institution type"), max_length=32, choices=InstitutionTypes.choices
     )
-    about = models.TextField(verbose_name=_("About"), blank=True, null=True)
+    about = RichTextField(verbose_name=_("About"), blank=True, null=True)
     intake_months = ModifiedArrayField(
         verbose_name=_("Intake month"),
         base_field=models.CharField(max_length=32, choices=MonthChoices.choices),
