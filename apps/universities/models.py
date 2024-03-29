@@ -1,6 +1,7 @@
+from ckeditor.fields import RichTextField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from ckeditor.fields import RichTextField
+from django_resized import ResizedImageField
 
 from apps.common.models import BaseModel, ModifiedArrayField
 
@@ -22,6 +23,19 @@ class Specialty(BaseModel):
 
 class University(BaseModel):
     name = models.CharField(verbose_name=_("Name"), max_length=255)
+    image = ResizedImageField(
+        verbose_name=_("Image"),
+        upload_to="universities/images/",
+        blank=True,
+        null=True,
+    )
+    logo = ResizedImageField(
+        verbose_name=_("Logo"),
+        upload_to="universities/logos/",
+        blank=True,
+        null=True,
+        force_format=None,
+    )
     agency = models.ForeignKey(
         verbose_name=_("Agency"),
         to="organizations.Agency",
@@ -39,9 +53,12 @@ class University(BaseModel):
     institution_type = models.CharField(
         verbose_name=_("Institution type"), max_length=32, choices=InstitutionTypes.choices
     )
+    address = models.CharField(verbose_name=_("Address"), max_length=255, blank=True, null=True)
     about = RichTextField(verbose_name=_("About"), blank=True, null=True)
+    full_scolarship = models.BooleanField(verbose_name=_("Full scolarship"), default=False)
+    is_featured = models.BooleanField(verbose_name=_("Is featured"), default=False)
     intake_months = ModifiedArrayField(
-        verbose_name=_("Intake month"),
+        verbose_name=_("Intake months"),
         base_field=models.CharField(max_length=32, choices=MonthChoices.choices),
         null=True,
         blank=True,
@@ -105,7 +122,7 @@ class UniversityCourse(BaseModel):
         verbose_name=_("Tuition fee"), max_digits=10, decimal_places=2, help_text=_("In USD")
     )
     intake_months = ModifiedArrayField(
-        verbose_name=_("Intake month"),
+        verbose_name=_("Intake months"),
         base_field=models.CharField(max_length=32, choices=MonthChoices.choices),
         null=True,
         blank=True,
