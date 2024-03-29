@@ -23,6 +23,7 @@ class Specialty(BaseModel):
 
 class University(BaseModel):
     name = models.CharField(verbose_name=_("Name"), max_length=255)
+    slug = models.SlugField(verbose_name=_("Slug"), max_length=255, unique=True)
     image = ResizedImageField(
         verbose_name=_("Image"),
         upload_to="universities/images/",

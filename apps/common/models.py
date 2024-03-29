@@ -1,7 +1,7 @@
 from django import forms
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.contrib.postgres.fields import ArrayField
 
 
 class BaseModel(models.Model):
@@ -18,7 +18,7 @@ class ModifiedArrayField(ArrayField):
             "form_class": forms.MultipleChoiceField,
             "choices": self.base_field.choices,
             "widget": forms.CheckboxSelectMultiple,
-            **kwargs
+            **kwargs,
         }
         return super(ArrayField, self).formfield(**defaults)
 
@@ -49,6 +49,7 @@ class FrontendTranslation(BaseModel):
 
 class Country(BaseModel):
     name = models.CharField(_("Name"), max_length=255)
+    is_top = models.BooleanField(_("Is top"), default=False)
 
     class Meta:
         verbose_name = _("Country")
