@@ -13,6 +13,7 @@ class UniversityListSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "name",
+            "slug",
             "logo",
             "is_featured",
             "full_scolarship",

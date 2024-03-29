@@ -9,6 +9,8 @@ from .serializers import UniversityListSerializer
 class UniversityListAPIView(ListAPIView):
     queryset = University.objects.all()
     serializer_class = UniversityListSerializer
+    lookup_field = "slug"
+    lookup_url_kwarg = "slug"
 
     def get_queryset(self):
         qs = super().get_queryset().order_by("-created_at")

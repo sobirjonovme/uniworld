@@ -17,6 +17,7 @@ class UniversityAdmin(TranslationAdmin):
     search_fields = ("name", "name_uz", "name_en", "name_ru")
     list_filter = ("country", "agency", "full_scolarship", "is_featured")
     autocomplete_fields = ("country", "agency")
+    prepopulated_fields = {"slug": ("name",)}
     ordering = ("-id",)
     inlines = (RequiredDocumentInline,)
 
