@@ -1,6 +1,7 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
 
-from apps.common.models import FrontendTranslation, VersionHistory, Country
+from apps.common.models import Country, FrontendTranslation, VersionHistory
 
 
 @admin.register(VersionHistory)
@@ -13,7 +14,7 @@ class VersionHistoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(FrontendTranslation)
-class FrontTranslationAdmin(admin.ModelAdmin):
+class FrontTranslationAdmin(TranslationAdmin):
     list_display = ("id", "key", "text", "created_at", "updated_at")
     list_display_links = ("id", "key")
     search_fields = ("key", "text")
@@ -21,5 +22,5 @@ class FrontTranslationAdmin(admin.ModelAdmin):
 
 
 @admin.register(Country)
-class CountryAdmin(admin.ModelAdmin):
+class CountryAdmin(TranslationAdmin):
     pass

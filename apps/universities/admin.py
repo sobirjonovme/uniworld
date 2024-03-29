@@ -1,6 +1,7 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
 
-from .models import University, UniversityCourse, Specialty, RequiredDocument
+from .models import RequiredDocument, Specialty, University, UniversityCourse
 
 
 # Register your models here.
@@ -10,15 +11,15 @@ class RequiredDocumentInline(admin.TabularInline):
 
 
 @admin.register(University)
-class UniversityAdmin(admin.ModelAdmin):
+class UniversityAdmin(TranslationAdmin):
     inlines = (RequiredDocumentInline,)
 
 
 @admin.register(Specialty)
-class SpecialtyAdmin(admin.ModelAdmin):
+class SpecialtyAdmin(TranslationAdmin):
     pass
 
 
 @admin.register(UniversityCourse)
-class UniversityCourseAdmin(admin.ModelAdmin):
+class UniversityCourseAdmin(TranslationAdmin):
     pass

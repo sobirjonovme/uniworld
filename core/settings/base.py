@@ -14,6 +14,7 @@ from datetime import timedelta
 from pathlib import Path
 
 import environ
+from django.utils.translation import gettext_lazy as _
 
 from core.ckeditor_conf import *  # noqa
 from core.jazzmin_conf import *  # noqa
@@ -159,6 +160,26 @@ TIME_ZONE = "Asia/Tashkent"
 USE_I18N = True
 
 USE_TZ = True
+
+# MODEL TRANSLATION CONFIGURATIONS
+MODELTRANSLATION_DEFAULT_LANGUAGE = "en"
+MODELTRANSLATION_LANGUAGES = ("uz", "en", "ru")
+MODELTRANSLATION_FALLBACK_LANGUAGES = {
+    "default": ("uz", "en", "ru"),
+    "uz": ("en", "ru"),
+    "en": ("uz", "ru"),
+    "ru": ("uz", "en"),
+}
+MODELTRANSLATION_LANGUAGES_CHOICES = (
+    ("uz", _("Uzbek")),
+    ("en", _("English")),
+    ("ru", _("Russian")),
+)
+LANGUAGES = (
+    ("uz", _("Uzbek")),
+    ("en", _("English")),
+    ("ru", _("Russian")),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
