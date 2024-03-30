@@ -10,9 +10,7 @@ class UniversityFilter(filters.FilterSet):
 
     class Meta:
         model = University
-        fields = {
-            "country": ["exact"],
-        }
+        fields = ("country", "is_featured")
 
     def filter_full_scolarship(self, queryset, name, value):
         if value:
@@ -23,10 +21,7 @@ class UniversityFilter(filters.FilterSet):
 class UniversityCourseFilter(filters.FilterSet):
     class Meta:
         model = UniversityCourse
-        fields = {
-            "specialty": ["exact"],
-            "qualification_level": ["exact"],
-        }
+        fields = ("specialty", "qualification_level")
 
 
 UNIVERSITY_COURSE_FILTER_PARAMETERS = [
