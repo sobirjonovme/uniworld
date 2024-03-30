@@ -54,6 +54,9 @@ class University(BaseModel):
     institution_type = models.CharField(
         verbose_name=_("Institution type"), max_length=32, choices=InstitutionTypes.choices
     )
+    establishment_year = models.CharField(verbose_name=_("Establishment year"), max_length=255, blank=True, null=True)
+    has_dormitory = models.BooleanField(verbose_name=_("Has dormitory"), default=False)
+    students_count = models.CharField(verbose_name=_("Students count"), max_length=255, blank=True, null=True)
     address = models.CharField(verbose_name=_("Address"), max_length=255, blank=True, null=True)
     about = RichTextField(verbose_name=_("About"), blank=True, null=True)
     full_scolarship = models.BooleanField(verbose_name=_("Full scolarship"), default=False)
