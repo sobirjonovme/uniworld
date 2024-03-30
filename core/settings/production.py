@@ -20,6 +20,8 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",
     "http://uniworld.xn--0h8h.uz",
     "https://uniworld.xn--0h8h.uz",
+    "http://panel.uniworld.uz",
+    "https://panel.uniworld.uz",
 ]
 
 ###################################################################
