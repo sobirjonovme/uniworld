@@ -1,0 +1,37 @@
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+from apps.common.choices import GenderChoices
+from apps.common.models import BaseModel
+
+from .choices import ApplicationStatus
+
+
+# Create your models here.
+class Application(BaseModel):
+    university = models.ForeignKey(
+        verbose_name=_("University"), to="universities.University", on_delete=models.SET_NULL, null=True, blank=True
+    )
+    course = models.ForeignKey(
+        verbose_name=_("Course"), to="universities.UniversityCourse", on_delete=models.SET_NULL, null=True, blank=True
+    )
+    agency = models.ForeignKey(
+        verbose_name=_("Agency"), to="organizations.Agency", on_delete=models.SET_NULL, null=True
+    )
+    status = models.CharField(
+        verbose_name=_("Status"), max_length=15, choices=ApplicationStatus.choices, default=ApplicationStatus.RECEIVED
+    )
+    first_name = models.CharField(verbose_name=_("First Name"), max_length=255)
+    last_name = models.CharField(verbose_name=_("Last Name"), max_length=255)
+    age = models.PositiveIntegerField(verbose_name=_("Age"))
+    phone_number = models.CharField(verbose_name=_("Phone Number"), max_length=31)
+    email = models.EmailField(verbose_name=_("Email"))
+    gender = models.CharField(verbose_name=_("Gender"), max_length=15, choices=GenderChoices.choices)
+    region = models.ForeignKey(verbose_name=_("Region"), to="common.Region", on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        verbose_name = _("Application")
+        verbose_name_plural = _("Applications")
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"

@@ -50,6 +50,7 @@ DJANGO_APPS = [
 ]
 
 CUSTOM_APPS = [
+    "apps.applications",
     "apps.common",
     "apps.organizations",
     "apps.universities",

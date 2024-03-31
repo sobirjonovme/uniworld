@@ -57,3 +57,14 @@ class Country(BaseModel):
 
     def __str__(self):
         return self.name
+
+
+class Region(BaseModel):
+    name = models.CharField(_("Name"), max_length=255)
+
+    class Meta:
+        verbose_name = _("Region")
+        verbose_name_plural = _("Regions")
+
+    def __str__(self):
+        return self.name

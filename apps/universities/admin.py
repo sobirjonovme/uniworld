@@ -40,7 +40,8 @@ class UniversityCourseAdmin(TranslationAdmin):
     list_display_links = ("id", "name")
     search_fields = ("name", "name_uz", "name_en", "name_ru")
     list_filter = ("study_type", "qualification_level", "university")
-    # autocomplete_fields = ("university", "specialty")
+    autocomplete_fields = ("university", "specialty")
+    ordering = ("-id",)
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
