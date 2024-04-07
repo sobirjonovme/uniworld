@@ -25,7 +25,7 @@ class CountryAdmin(TranslationAdmin):
     list_display = ("id", "name")
     list_display_links = ("id", "name")
     search_fields = ("name", "name_uz", "name_en", "name_ru")
-    ordering = ("-id",)
+    ordering = ("name",)
 
 
 @admin.register(Region)
@@ -36,4 +36,4 @@ class RegionAdmin(TranslationAdmin):
     )
     list_display_links = ("id", "name")
     search_fields = ("name", "name_uz", "name_en", "name_ru")
-    ordering = ("-id",)
+    ordering = ("name",)

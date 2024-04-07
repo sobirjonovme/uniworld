@@ -1,6 +1,8 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 
+from apps.users.choices import UserRoles
+
 from .models import RequiredDocument, Specialty, University, UniversityCourse
 
 
@@ -22,9 +24,16 @@ class UniversityAdmin(TranslationAdmin):
     inlines = (RequiredDocumentInline,)
 
     def get_queryset(self, request):
+        user = request.user
         qs = super().get_queryset(request)
         qs = qs.select_related("country", "agency")
-        return qs
+
+        if user.is_superuser:
+            return qs
+        if user.role in [UserRoles.AGENCY_OWNER, UserRoles.AGENCY_OPERATOR]:
+            return qs.filter(agency=user.agency)
+
+        return qs.none()
 
 
 @admin.register(Specialty)
@@ -32,6 +41,7 @@ class SpecialtyAdmin(TranslationAdmin):
     list_display = ("id", "name")
     list_display_links = ("id", "name")
     search_fields = ("name", "name_uz", "name_en", "name_ru")
+    ordering = ("name",)
 
 
 @admin.register(UniversityCourse)
@@ -44,6 +54,14 @@ class UniversityCourseAdmin(TranslationAdmin):
     ordering = ("-id",)
 
     def get_queryset(self, request):
+        user = request.user
         qs = super().get_queryset(request)
         qs = qs.select_related("university", "specialty")
+
+        if user.is_superuser:
+            return qs
+
+        if user.role in [UserRoles.AGENCY_OWNER, UserRoles.AGENCY_OPERATOR]:
+            return qs.filter(university__agency=user.agency)
+
         return qs
