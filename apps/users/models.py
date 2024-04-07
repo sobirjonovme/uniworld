@@ -32,7 +32,7 @@ class User(AbstractUser, BaseModel):
         return name
 
     def save(self, *args, **kwargs):
-        if self.role == [UserRoles.AGENCY_OPERATOR, UserRoles.AGENCY_OWNER, UserRoles.ADMIN]:
+        if self.role in [UserRoles.AGENCY_OPERATOR, UserRoles.AGENCY_OWNER, UserRoles.ADMIN]:
             self.is_staff = True
         super().save(*args, **kwargs)
 
