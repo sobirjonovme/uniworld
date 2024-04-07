@@ -18,6 +18,9 @@ class Application(BaseModel):
     agency = models.ForeignKey(
         verbose_name=_("Agency"), to="organizations.Agency", on_delete=models.SET_NULL, null=True
     )
+    operator = models.ForeignKey(
+        verbose_name=_("Operator"), to="users.User", on_delete=models.SET_NULL, related_name="applications", null=True
+    )
     status = models.CharField(
         verbose_name=_("Status"), max_length=15, choices=ApplicationStatus.choices, default=ApplicationStatus.RECEIVED
     )

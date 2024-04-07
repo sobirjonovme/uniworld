@@ -11,6 +11,7 @@ urlpatterns = [
     path("api/v1/common/", include("apps.common.urls")),
     path("api/v1/universities/", include("apps.universities.urls")),
     path("api/v1/applications/", include("apps.applications.urls")),
+    path("api/v1/bot/", include("apps.tgbot.urls")),
 ]
 
 urlpatterns += swagger_urlpatterns

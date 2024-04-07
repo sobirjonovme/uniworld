@@ -53,6 +53,7 @@ CUSTOM_APPS = [
     "apps.applications",
     "apps.common",
     "apps.organizations",
+    "apps.tgbot",
     "apps.universities",
     "apps.users",
 ]
@@ -252,3 +253,11 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_LIFETIME": timedelta(days=1),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=10),
 }
+
+
+# Telegram Bot Configurations
+HOST = env.str("HOST", "http://localhost:8000")
+RUN_BOT_CELERY = env.bool("RUN_BOT_CELERY", False)
+BOT_TOKEN = env.str("BOT_TOKEN", "")
+BOT_SECRET_KEY = env.str("BOT_SECRET_KEY", "")
+TELEGRAM_LOGS_CHAT_ID = env.str("TELEGRAM_LOGS_CHAT_ID", "")
