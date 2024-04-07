@@ -1,17 +1,29 @@
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 
 from apps.users.models import OperatorCountry, UserRoles
 
+from .choices import ApplicationStatus
 from .models import Application
 
 
 # Register your models here.
 @admin.register(Application)
 class ApplicationAdmin(admin.ModelAdmin):
-    list_display = ("id", "first_name", "last_name", "phone_number", "university", "status")
-    list_display_links = ("id", "first_name", "last_name", "phone_number")
+    list_display = ("id", "first_name", "last_name", "phone_number", "university", "status_")
+    list_display_links = ("id", "first_name", "last_name")
     search_fields = ("first_name", "last_name", "phone_number")
     autocomplete_fields = ("university", "course", "agency", "region")
+    list_filter = ("status",)
+
+    def status_(self, obj):
+        status_colors = {
+            ApplicationStatus.RECEIVED: "#1fafed",
+            ApplicationStatus.IN_PROGRESS: "#3e484f",
+            ApplicationStatus.FINISHED: "green",
+            ApplicationStatus.CANCELLED: "red",
+        }
+        return mark_safe(f'<span style="color: {status_colors[obj.status]}"><b>{obj.get_status_display()}</b></span>')
 
     def get_queryset(self, request):
         user = request.user

@@ -1,17 +1,14 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from apps.common.models import BaseModel
 
+from .choices import UserRoles
+from .managers import OperatorManager
+
 
 # Create your models here.
-class UserRoles(models.TextChoices):
-    ADMIN = "admin", _("Admin")
-    AGENCY_OWNER = "agency_owner", _("Agency Owner")
-    AGENCY_OPERATOR = "agency_operator", _("Agency Operator")
-
-
 class User(AbstractUser, BaseModel):
     role = models.CharField(_("Role"), max_length=16, choices=UserRoles.choices)
     agency = models.ForeignKey(
@@ -24,6 +21,28 @@ class User(AbstractUser, BaseModel):
         verbose_name = _("User")
         verbose_name_plural = _("Users")
 
+    def __str__(self):
+        name = f"{self.first_name} {self.last_name}" if self.first_name and self.last_name else self.username
+        return name
+
+    def save(self, *args, **kwargs):
+        if self.role == [UserRoles.AGENCY_OPERATOR, UserRoles.AGENCY_OWNER, UserRoles.ADMIN]:
+            self.is_staff = True
+        super().save(*args, **kwargs)
+
+        if self.role == UserRoles.AGENCY_OPERATOR:
+            operator_group = Group.objects.filter(name="Agency Operator").first()
+            if not operator_group:
+                operator_group = Group.objects.create(name="Agency Operator")
+            self.groups.add(operator_group)
+
+        if self.role == UserRoles.AGENCY_OWNER:
+            self.is_staff = True
+            owner_group = Group.objects.filter(name="Agency Owner").first()
+            if not owner_group:
+                owner_group = Group.objects.create(name="Agency Owner")
+            self.groups.add(owner_group)
+
 
 class OperatorCountry(BaseModel):
     user = models.ForeignKey(
@@ -35,3 +54,12 @@ class OperatorCountry(BaseModel):
         verbose_name = _("Operator Country")
         verbose_name_plural = _("Operator Countries")
         unique_together = ("user", "country")
+
+
+class Operator(User):
+    objects = OperatorManager()
+
+    class Meta:
+        verbose_name = _("Operator")
+        verbose_name_plural = _("Operators")
+        proxy = True
