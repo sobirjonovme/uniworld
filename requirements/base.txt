@@ -11,3 +11,4 @@ django-modeltranslation==0.18.11
 Pillow==10.2.0
 django-ckeditor==6.7.0
 django-resized==1.0.2
+python-telegram-bot==13.15  # last sync version
