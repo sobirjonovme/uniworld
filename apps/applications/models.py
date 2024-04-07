@@ -31,6 +31,7 @@ class Application(BaseModel):
     email = models.EmailField(verbose_name=_("Email"))
     gender = models.CharField(verbose_name=_("Gender"), max_length=15, choices=GenderChoices.choices)
     region = models.ForeignKey(verbose_name=_("Region"), to="common.Region", on_delete=models.SET_NULL, null=True)
+    sent_telegram = models.BooleanField(verbose_name=_("Sent Telegram"), default=False)
 
     class Meta:
         verbose_name = _("Application")

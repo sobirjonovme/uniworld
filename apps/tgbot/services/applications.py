@@ -49,9 +49,15 @@ def send_application_info_to_operator(application):
     message = generate_application_info_message(application)
     buttons = get_applications_status_buttons(application)
 
-    bot.send_message(
-        chat_id=application.operator.telegram_id,
-        text=message,
-        reply_markup=buttons,
-        parse_mode=ParseMode.HTML,
-    )
+    try:
+        bot.send_message(
+            chat_id=application.operator.telegram_id,
+            text=message,
+            reply_markup=buttons,
+            parse_mode=ParseMode.HTML,
+        )
+    except Exception:
+        return
+
+    application.sent_telegram = True
+    application.save(update_fields=["sent_telegram", "updated_at"])
