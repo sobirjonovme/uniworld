@@ -6,6 +6,11 @@ class TgbotConfig(AppConfig):
     name = "apps.tgbot"
 
     def ready(self):
+        from django.conf import settings
+
+        if settings.STAGE == "production":
+            return
+
         from apps.tgbot.main import bot
         from apps.tgbot.services.on_startup import set_up_commands, set_webhook
 
