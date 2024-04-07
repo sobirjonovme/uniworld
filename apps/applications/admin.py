@@ -35,7 +35,7 @@ class ApplicationAdmin(admin.ModelAdmin):
             )
         )
 
-        if user.role == UserRoles.ADMIN:
+        if user.is_superuser:
             return qs
 
         if user.role == UserRoles.AGENCY_OWNER:
