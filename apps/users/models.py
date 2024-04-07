@@ -13,7 +13,12 @@ from .managers import OperatorManager
 class User(AbstractUser, BaseModel):
     role = models.CharField(_("Role"), max_length=16, choices=UserRoles.choices)
     agency = models.ForeignKey(
-        verbose_name=_("Agency"), to="organizations.Agency", on_delete=models.CASCADE, blank=True, null=True
+        verbose_name=_("Agency"),
+        to="organizations.Agency",
+        on_delete=models.CASCADE,
+        related_name="users",
+        blank=True,
+        null=True,
     )
     telegram_id = models.CharField(_("Telegram ID"), max_length=255, blank=True, null=True)
     phone_number = models.CharField(_("Phone Number"), max_length=31, blank=True, null=True)
@@ -23,7 +28,7 @@ class User(AbstractUser, BaseModel):
         verbose_name_plural = _("Users")
 
     def __str__(self):
-        name = f"{self.first_name} {self.last_name}" if self.first_name and self.last_name else self.username
+        name = f"{self.first_name} {self.last_name}" if self.first_name else self.username
         return name
 
     def save(self, *args, **kwargs):

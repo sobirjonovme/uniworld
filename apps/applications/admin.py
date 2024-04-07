@@ -48,3 +48,28 @@ class ApplicationAdmin(admin.ModelAdmin):
 
         # return empty queryset if user has no role
         return qs.none()
+
+    def get_readonly_fields(self, request, obj=None):
+        user = request.user
+        readonly_fields = list(self.readonly_fields)
+
+        if user.is_superuser:
+            return readonly_fields
+
+        if user.role in [UserRoles.AGENCY_OWNER, UserRoles.AGENCY_OPERATOR]:
+            extra_readonly_fields = [
+                "first_name",
+                "last_name",
+                "university",
+                "course",
+                "phone_number",
+                "gender",
+                "region",
+                "age",
+                "email",
+                "agency",
+                "operator",
+            ]
+            readonly_fields.extend(extra_readonly_fields)
+
+        return readonly_fields
