@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser, Group
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -55,6 +56,17 @@ class OperatorCountry(BaseModel):
         verbose_name_plural = _("Operator Countries")
         unique_together = ("user", "country")
 
+    def __str__(self):
+        return f"{self.user} - {self.country}"
+
+    def clean(self):
+        if self.user.role != UserRoles.AGENCY_OPERATOR:
+            raise ValidationError({"user": _("User should be operator")})
+
+        agency_country_ids = self.user.agency.countries.values_list("country_id", flat=True)
+        if self.country_id not in agency_country_ids:
+            raise ValidationError({"country": _("Country should be in agency countries")})
+
 
 class Operator(User):
     objects = OperatorManager()
@@ -63,3 +75,6 @@ class Operator(User):
         verbose_name = _("Operator")
         verbose_name_plural = _("Operators")
         proxy = True
+
+    def save(self, *args, **kwargs):
+        super(User, self).save(*args, **kwargs)
