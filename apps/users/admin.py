@@ -59,6 +59,11 @@ class UserAdmin(BaseUserAdmin):
         ),
     )
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        qs = qs.select_related("agency")
+        return qs
+
 
 @admin.register(Operator)
 class OperatorAdmin(BaseUserAdmin):
@@ -144,6 +149,7 @@ class OperatorAdmin(BaseUserAdmin):
     def get_queryset(self, request):
         user = request.user
         qs = super().get_queryset(request)
+        qs = qs.prefetch_related("countries__country")
 
         if user.is_superuser:
             return qs

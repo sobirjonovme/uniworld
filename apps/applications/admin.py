@@ -13,7 +13,7 @@ class ApplicationAdmin(admin.ModelAdmin):
     list_display = ("id", "first_name", "last_name", "phone_number", "university", "status_")
     list_display_links = ("id", "first_name", "last_name")
     search_fields = ("first_name", "last_name", "phone_number")
-    autocomplete_fields = ("university", "course", "agency", "region")
+    autocomplete_fields = ("university", "course", "agency", "region", "operator")
     list_filter = ("status",)
 
     def status_(self, obj):
