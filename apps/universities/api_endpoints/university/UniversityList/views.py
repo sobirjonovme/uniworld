@@ -1,6 +1,7 @@
 from django.db.models import Count, OuterRef, Subquery
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.filters import SearchFilter
 from rest_framework.generics import ListAPIView
 
 from apps.universities.filters import (UNIVERSITY_COURSE_FILTER_PARAMETERS,
@@ -15,8 +16,9 @@ class UniversityListAPIView(ListAPIView):
     queryset = University.objects.all()
     serializer_class = UniversityListSerializer
 
-    filter_backends = (DjangoFilterBackend,)
+    filter_backends = (DjangoFilterBackend, SearchFilter)
     filterset_class = UniversityFilter
+    search_fields = ("name", "name_en", "name_uz", "name_ru")
 
     def get_queryset(self):
         qs = super().get_queryset().order_by("-created_at")
