@@ -39,3 +39,27 @@ class Application(BaseModel):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
+class AdvisorApplication(BaseModel):
+    agency = models.ForeignKey(
+        verbose_name=_("Agency"), to="organizations.Agency", on_delete=models.SET_NULL, null=True, blank=True
+    )
+    status = models.CharField(
+        verbose_name=_("Status"), max_length=15, choices=ApplicationStatus.choices, default=ApplicationStatus.RECEIVED
+    )
+    first_name = models.CharField(verbose_name=_("First Name"), max_length=255)
+    last_name = models.CharField(verbose_name=_("Last Name"), max_length=255)
+    who_are_you = models.CharField(verbose_name=_("Who Are You"), max_length=255)
+    phone_number = models.CharField(verbose_name=_("Phone Number"), max_length=31)
+    country = models.ForeignKey(
+        verbose_name=_("Country"), to="common.Country", on_delete=models.SET_NULL, null=True, blank=True
+    )
+    region = models.ForeignKey(verbose_name=_("Region"), to="common.Region", on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        verbose_name = _("Advisor Application")
+        verbose_name_plural = _("Advisor Applications")
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"

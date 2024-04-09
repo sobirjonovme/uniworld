@@ -15,6 +15,7 @@ class UniversityListSerializer(serializers.ModelSerializer):
             "name",
             "slug",
             "logo",
+            "image",
             "is_featured",
             "full_scolarship",
             "country",
