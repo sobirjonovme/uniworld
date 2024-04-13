@@ -165,21 +165,21 @@ USE_TZ = True
 
 # MODEL TRANSLATION CONFIGURATIONS
 MODELTRANSLATION_DEFAULT_LANGUAGE = "en"
-MODELTRANSLATION_LANGUAGES = ("uz", "en", "ru")
+MODELTRANSLATION_LANGUAGES = ("en", "uz", "ru")
 MODELTRANSLATION_FALLBACK_LANGUAGES = {
-    "default": ("uz", "en", "ru"),
-    "uz": ("en", "ru"),
+    "default": ("en", "uz", "ru"),
     "en": ("uz", "ru"),
+    "uz": ("en", "ru"),
     "ru": ("uz", "en"),
 }
 MODELTRANSLATION_LANGUAGES_CHOICES = (
-    ("uz", _("Uzbek")),
     ("en", _("English")),
+    ("uz", _("Uzbek")),
     ("ru", _("Russian")),
 )
 LANGUAGES = (
-    ("uz", _("Uzbek")),
     ("en", _("English")),
+    ("uz", _("Uzbek")),
     ("ru", _("Russian")),
 )
 

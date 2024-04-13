@@ -1,7 +1,9 @@
+from ckeditor.fields import RichTextField
 from django import forms
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from solo.models import SingletonModel
 
 
 class BaseModel(models.Model):
@@ -68,3 +70,39 @@ class Region(BaseModel):
 
     def __str__(self):
         return self.name
+
+
+class TermsAndConditions(SingletonModel):
+    terms = RichTextField(_("Terms and conditions"))
+
+    class Meta:
+        verbose_name = _("Terms and conditions")
+        verbose_name_plural = _("Terms and conditions")
+
+    def __str__(self):
+        return str(_("Terms and conditions"))
+
+
+class PrivacyPolicy(SingletonModel):
+    policy = RichTextField(_("Privacy policy"))
+
+    class Meta:
+        verbose_name = _("Privacy policy")
+        verbose_name_plural = _("Privacy policy")
+
+    def __str__(self):
+        return str(_("Privacy policy"))
+
+
+class AboutUs(SingletonModel):
+    find_university = RichTextField(_("Find the right university"))
+    our_services = RichTextField(_("Our services"))
+    card_title = models.CharField(_("Card title"), max_length=255, null=True, blank=True)
+    card_body = RichTextField(_("Card body"), null=True, blank=True)
+
+    class Meta:
+        verbose_name = _("About us")
+        verbose_name_plural = _("About us")
+
+    def __str__(self):
+        return str(_("About us"))

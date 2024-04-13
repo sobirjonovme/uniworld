@@ -1,7 +1,10 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
+from solo.admin import SingletonModelAdmin
 
-from apps.common.models import Country, FrontendTranslation, Region
+from apps.common.mixins import TabbedTranslationMixin
+from apps.common.models import (AboutUs, Country, FrontendTranslation,
+                                PrivacyPolicy, Region, TermsAndConditions)
 
 # @admin.register(VersionHistory)
 # class VersionHistoryAdmin(admin.ModelAdmin):
@@ -37,3 +40,18 @@ class RegionAdmin(TranslationAdmin):
     list_display_links = ("id", "name")
     search_fields = ("name", "name_uz", "name_en", "name_ru")
     ordering = ("name",)
+
+
+@admin.register(TermsAndConditions)
+class TermsAndConditionsAdmin(SingletonModelAdmin, TranslationAdmin):
+    pass
+
+
+@admin.register(PrivacyPolicy)
+class PrivacyPolicyAdmin(SingletonModelAdmin, TranslationAdmin):
+    pass
+
+
+@admin.register(AboutUs)
+class AboutUsAdmin(TabbedTranslationMixin, SingletonModelAdmin):
+    pass
