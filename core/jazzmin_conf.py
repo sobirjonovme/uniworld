@@ -1,20 +1,20 @@
 JAZZMIN_SETTINGS: dict = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
-    "site_title": "Admin Site Title",
+    "site_title": "Uniworld Dashboard",
     # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_header": "Admin Site Header",
+    "site_header": "Uniworld Dashboard",
     # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_brand": "Admin Site Brand",
+    "site_brand": "Panel",
     # Logo to use for your site, must be present in static files, used for brand on top left
-    # "site_logo": "assets/img/admin-logo.png",
+    "site_logo": "uniworld_logo.png",
     # "login_logo": "assets/img/kapital-qurilish-logo.png",
     # "login_logo_dark": "assets/img/kapital-qurilish-logo.png",
     # CSS classes that are applied to the logo above
     "site_logo_classes": "img",
     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
-    # "site_icon": "assets/img/kapital-qurilish-logo.png",
+    "site_icon": "uniworld_favicon.ico",
     # Welcome text on the login screen
-    "welcome_sign": "Welcome to Admin",
+    "welcome_sign": "Welcome to Uniworld Admin Dashboard",
     # Copyright on the footer
     "copyright": "sobirjonov_me",
     # The model admin to search from the search bar, search bar omitted if excluded
