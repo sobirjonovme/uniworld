@@ -7,3 +7,8 @@ class ApplicationStatus(models.TextChoices):
     IN_PROGRESS = "IN_PROGRESS", _("In Progress")
     FINISHED = "FINISHED", _("Finished")
     CANCELLED = "CANCELLED", _("Cancelled")
+
+
+class WhoAreYouChoices(models.TextChoices):
+    STUDENT = "STUDENT", _("Student")
+    PARENT = "PARENT", _("Parent")

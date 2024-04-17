@@ -115,6 +115,7 @@ class AdvisorApplicationAdmin(admin.ModelAdmin):
             extra_readonly_fields = [
                 "first_name",
                 "last_name",
+                "who_are_you",
                 "phone_number",
                 "country",
                 "region",

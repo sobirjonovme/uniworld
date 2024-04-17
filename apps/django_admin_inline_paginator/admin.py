@@ -1,6 +1,6 @@
 from typing import Optional
 
-from django.contrib.admin import StackedInline, TabularInline
+from django.contrib.admin import TabularInline
 from django.contrib.admin.views.main import ChangeList
 from django.contrib.contenttypes.admin import GenericTabularInline
 from django.core.paginator import Paginator
@@ -89,5 +89,5 @@ class GenericTabularInlinePaginated(InlinePaginated, GenericTabularInline):
     pass
 
 
-class StackedInlinePaginated(InlinePaginated, StackedInline):
+class StackedInlinePaginatedMixin(InlinePaginated):
     template = "admin/stacked_paginated.html"

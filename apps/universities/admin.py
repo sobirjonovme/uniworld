@@ -1,7 +1,8 @@
 from django.contrib import admin
-from modeltranslation.admin import TranslationAdmin
+from modeltranslation.admin import TranslationAdmin, TranslationStackedInline
 
-from apps.django_admin_inline_paginator.admin import StackedInlinePaginated
+from apps.django_admin_inline_paginator.admin import \
+    StackedInlinePaginatedMixin
 from apps.users.choices import UserRoles
 
 from .models import RequiredDocument, Specialty, University, UniversityCourse
@@ -13,7 +14,7 @@ class RequiredDocumentInline(admin.TabularInline):
     extra = 0
 
 
-class UniversityCourseInline(StackedInlinePaginated):
+class UniversityCourseInline(StackedInlinePaginatedMixin, TranslationStackedInline):
     model = UniversityCourse
     extra = 0
     ordering = ("-id",)

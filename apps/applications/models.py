@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from apps.common.choices import GenderChoices
 from apps.common.models import BaseModel
 
-from .choices import ApplicationStatus
+from .choices import ApplicationStatus, WhoAreYouChoices
 
 
 # Create your models here.
@@ -50,7 +50,9 @@ class AdvisorApplication(BaseModel):
     )
     first_name = models.CharField(verbose_name=_("First Name"), max_length=255)
     last_name = models.CharField(verbose_name=_("Last Name"), max_length=255)
-    who_are_you = models.CharField(verbose_name=_("Who Are You"), max_length=255)
+    who_are_you = models.CharField(
+        verbose_name=_("Who Are You"), max_length=31, choices=WhoAreYouChoices.choices, null=True
+    )
     phone_number = models.CharField(verbose_name=_("Phone Number"), max_length=31)
     country = models.ForeignKey(
         verbose_name=_("Country"), to="common.Country", on_delete=models.SET_NULL, null=True, blank=True
