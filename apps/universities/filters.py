@@ -19,9 +19,33 @@ class UniversityFilter(filters.FilterSet):
 
 
 class UniversityCourseFilter(filters.FilterSet):
+    qualification_level = filters.ChoiceFilter(
+        method="filter_qualification_level", label="Qualification level", choices=QualificationLevels.choices
+    )
+
     class Meta:
         model = UniversityCourse
         fields = ("specialty", "qualification_level")
+
+    def filter_qualification_level(self, queryset, name, value):
+        if not value:
+            return queryset
+
+        if value == QualificationLevels.UNDERGRADUATE:
+            return queryset.filter(
+                qualification_level__in=[
+                    QualificationLevels.DIPLOMA,
+                    QualificationLevels.BACHELOR,
+                    QualificationLevels.UNDERGRADUATE,
+                ]
+            )
+
+        if value == QualificationLevels.POSTGRADUATE:
+            return queryset.filter(
+                qualification_level__in=[QualificationLevels.MASTER, QualificationLevels.POSTGRADUATE]
+            )
+
+        return queryset.filter(qualification_level=value)
 
 
 UNIVERSITY_COURSE_FILTER_PARAMETERS = [
