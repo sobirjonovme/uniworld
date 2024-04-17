@@ -137,4 +137,4 @@ class UniversityCourse(BaseModel):
         verbose_name_plural = _("University courses")
 
     def __str__(self):
-        return f"{self.university} - {self.specialty}"
+        return f"# {self.id} - {self.name}"

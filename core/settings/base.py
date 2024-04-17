@@ -50,6 +50,7 @@ DJANGO_APPS = [
 ]
 
 CUSTOM_APPS = [
+    "apps.django_admin_inline_paginator",
     "apps.applications",
     "apps.common",
     "apps.organizations",

@@ -1,6 +1,7 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 
+from apps.django_admin_inline_paginator.admin import StackedInlinePaginated
 from apps.users.choices import UserRoles
 
 from .models import RequiredDocument, Specialty, University, UniversityCourse
@@ -12,6 +13,13 @@ class RequiredDocumentInline(admin.TabularInline):
     extra = 0
 
 
+class UniversityCourseInline(StackedInlinePaginated):
+    model = UniversityCourse
+    extra = 0
+    ordering = ("-id",)
+    per_page = 5
+
+
 @admin.register(University)
 class UniversityAdmin(TranslationAdmin):
     list_display = ("id", "name", "country", "agency", "full_scolarship", "is_featured")
@@ -21,7 +29,7 @@ class UniversityAdmin(TranslationAdmin):
     autocomplete_fields = ("country", "agency")
     prepopulated_fields = {"slug": ("name",)}
     ordering = ("-id",)
-    inlines = (RequiredDocumentInline,)
+    inlines = (RequiredDocumentInline, UniversityCourseInline)
 
     def get_queryset(self, request):
         user = request.user
