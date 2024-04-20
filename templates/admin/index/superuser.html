@@ -1,0 +1,350 @@
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 0 30px 0 rgba(56, 71, 109, 0.09);
+        padding: 24px;
+    }
+
+    .card span {
+        font-size: 17px;
+        color: #515254;
+        font-weight: 500;
+    }
+
+    .card .percentage {
+        font-size: 17px;
+        color: #046b27;
+        font-weight: 600;
+    }
+
+    .card h3 {
+        font-weight: 700;
+        font-size: 24px;
+        color: #2C2D33;
+        margin-bottom: 4px;
+    }
+
+    .img-wrapper {
+        width: 52px;
+        height: 52px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .title {
+        font-weight: 700;
+        font-size: 28px;
+        color: #2C2D33;
+        margin-bottom: 4px;
+    }
+
+    .title__small {
+        font-weight: 600;
+        font-size: 20px;
+        color: #2C2D33;
+        margin-bottom: 4px;
+    }
+
+    .text {
+        font-weight: 400;
+        font-size: 14px;
+        color: #90A1B5;
+    }
+
+    .justify-between {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .flex-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .text__small {
+        font-weight: 500;
+        font-size: 13px;
+    }
+
+    .text__badge {
+        font-weight: 500;
+        font-size: 14px;
+        color: #2C2D33;
+    }
+
+    .min_width {
+        text-align: right;
+        min-width: 80px;
+    }
+
+    .colors > div {
+        height: 40px;
+        box-shadow: 0 4px 20px 0 rgba(27, 197, 189, 0.2);
+        border-radius: 2px;
+    }
+
+    .badger {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+        display: block;
+    }
+
+    .btn-gray {
+        border-radius: 6px;
+        background: white;
+        padding: 9px;
+        color: #90A1B5;
+        transition: all .25s ease-in-out;
+    }
+
+    .btn-gray:hover {
+        background: #90A1B5;
+        color: white;
+    }
+
+    .btn-orange {
+        border-radius: 6px;
+        background: #DA6B3B;
+        padding: 9px;
+        color: white;
+        transition: all .25s ease-in-out;
+    }
+
+    .btn-orange:hover {
+        background: #C25A2C;
+    }
+
+    .apexcharts-toolbar {
+        display: none !important;
+    }
+</style>
+<body style="background: #F7F9FA">
+
+<!--    Applications statistics   -->
+<div style="display: grid; grid-gap: 16px; grid-template-columns: repeat(4, 1fr); width: 100%">
+    <div class="card">
+        <div class="img-wrapper" style="background: #808080">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus"
+                 viewBox="0 0 16 16">
+                <path d="m.5 3 .04.87a2 2 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2m5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19q-.362.002-.683.12L1.5 2.98a1 1 0 0 1 1-.98z"/>
+                <path d="M13.5 9a.5.5 0 0 1 .5.5V11h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V12h-1.5a.5.5 0 0 1 0-1H13V9.5a.5.5 0 0 1 .5-.5"/>
+            </svg>
+        </div>
+
+        <h3>{{ applications_status.RECEIVED.count }}</h3>
+        <span class="text">
+            Yuborilgan arizalar  <span class="percentage">({{ applications_status.RECEIVED.percentage }}%)</span>
+        </span>
+    </div>
+
+    <div class="card">
+        <div class="img-wrapper" style="background: #FEC110">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-file-arrow-down" viewBox="0 0 16 16">
+                <path d="M8 5a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5A.5.5 0 0 1 8 5"/>
+                <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1"/>
+            </svg>
+        </div>
+
+        <h3>{{ applications_status.IN_PROGRESS.count }}</h3>
+        <span class="text">
+            Jarayondagi arizalar  <span class="percentage">({{ applications_status.IN_PROGRESS.percentage }}%)</span>
+        </span>
+    </div>
+
+    <div class="card">
+        <div class="img-wrapper" style="background: #8efa78">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-file-check-fill" viewBox="0 0 16 16">
+                <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2m-1.146 6.854-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708.708"/>
+            </svg>
+        </div>
+
+        <h3>{{ applications_status.FINISHED.count }}</h3>
+        <span class="text">
+            Yakunlangan arizalar  <span class="percentage">({{ applications_status.FINISHED.percentage }}%)</span>
+        </span>
+    </div>
+
+    <div class="card">
+        <div class="img-wrapper" style="background: #FF0000">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-x"
+                 viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M6.146 7.146a.5.5 0 0 1 .708 0L8 8.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 9l1.147 1.146a.5.5 0 0 1-.708.708L8 9.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 9 6.146 7.854a.5.5 0 0 1 0-.708"/>
+                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+                <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+            </svg>
+        </div>
+        <h3>{{ applications_status.CANCELLED.count }}</h3>
+        <span class="text">
+            Bekor qilingan arizalar  <span class="percentage">({{ applications_status.CANCELLED.percentage }}%)</span>
+        </span>
+    </div>
+</div>
+<!--    End of applications statistics   -->
+
+
+<!--    Pie charts  -->
+
+<h1 style="margin-top: 50px; margin-bottom: 20px; font-size: 40px; text-align: center;"> Arizalar statistikasi </h1>
+
+<div style="display: flex; gap: 16px; width: 100%;">
+    <!--mini table-->
+    <div style="width: 50%">
+        <div class="card" style="height: 95%">
+            <h1 style="margin-bottom: 30px">Viloyatlar bo'yicha</h1>
+            <div id="pie-chart-region" style="margin-bottom: 16px;"></div>
+        </div>
+    </div>
+
+    <div style="width: 50%; ">
+        <div class="card" style="height: 95%">
+            <h1 style="margin-bottom: 30px">Jins bo'yicha</h1>
+            <div id="pie-chart-gender" style="margin-bottom: 16px;"></div>
+        </div>
+    </div>
+
+</div>
+<!--    End of Pie charts  -->
+
+
+<!--<h1 style="margin-top: 50px; margin-bottom: 20px; font-size: 40px;">Platformadagi umumiy statistika</h1>-->
+
+<div style="display: flex; gap: 16px; width: 100%;">
+    <!--    TABLE-->
+    <div style="width: 100%;">
+        <div class="card" style="margin-block: 16px">
+            <div class="justify-between">
+                <h4 class="title__small">Arizalar davlatlar kesimida</h4>
+                <h4 class="title__small">Jami: {{ applications_country.total_applications }}</h4>
+            </div>
+<!--            <div class="justify-between">-->
+<!--                <p class="text">Text</p>-->
+<!--            </div>-->
+
+            <!--    colors-->
+            <div class="colors" style="margin-block: 24px; display: flex; gap: 4px;">
+                {% for country_data in applications_country.all_datas %}
+                    <div style="width: {{ country_data.percentage }}%; background: {{ country_data.color }}"></div>
+                {% endfor %}
+
+            </div>
+
+            {% for data in applications_country.divided_datas %}
+                <div style="border-bottom: 1px solid #EFF2F5; width: 100%; display: flex">
+                    <div style="padding-block: 16px; width: 50%" class="justify-between">
+                        <div class="flex-center">
+                            <span class="badger" style="background: {{ data.left.color }}"></span>
+                            <span class="text" style="margin-left: 12px;"> {{ data.left.country }} </span>
+                        </div>
+
+                        <div class="flex-center">
+                            <span class="text__badge">{{ data.left.percentage }}%</span>
+                            <span class="text__badge min_width">{{ data.left.count }}</span>
+                        </div>
+                    </div>
+
+                    <span style="background: #EFF2F5; width: 1px; height: 50px;margin-inline: 10px"></span>
+                    <div style="padding-block: 16px; width: 50%" class="justify-between">
+                        {% if data.right %}
+                            <div class="flex-center">
+                                <span class="badger" style="background: {{ data.right.color }}"></span>
+                                <span class="text" style="margin-left: 12px;"> {{ data.right.country }} </span>
+                            </div>
+
+                            <div class="flex-center">
+                                <span class="text__badge">{{ data.right.percentage }}%</span>
+                                <span class="text__badge min_width">{{ data.right.count }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    <!--    gender chart-->
+    let options_gender = {
+        series: {{ applications_gender.counts|safe }},
+        percentages: {{ applications_gender.percentages|safe }},
+        labels: {{ applications_gender.gender_names|safe }},
+        chart: {
+            type: 'donut',
+        },
+        colors: ['#1BC5BD', '#1B87C5', '#EB9F40', '#61A4F6', '#61C571', '#DD5D88', '#4FB2FF', '#6D2F85'],
+        dataLabels: {
+            formatter: function (val, opts) {
+                return opts.w.config.percentages[opts.seriesIndex] + '%';
+            }
+        },
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'bottom'
+                },
+                colors: ['#FF387B', '#61A4F6'],
+            }
+        }]
+    };
+
+    let chart_gender = new ApexCharts(document.querySelector("#pie-chart-gender"), options_gender);
+    chart_gender.render();
+
+
+
+    <!--    region chart-->
+    let options_region = {
+        series: {{ applications_region.counts|safe }},
+        percentages: {{ applications_region.percentages|safe }},
+        labels: {{ applications_region.region_names|safe }},
+        chart: {
+            type: 'donut',
+        },
+        colors: ['#1BC5BD', '#1B87C5', '#EB9F40', '#61A4F6', '#61C571', '#DD5D88', '#4FB2FF', '#6D2F85'],
+        dataLabels: {
+            formatter: function (val, opts) {
+                return opts.w.config.percentages[opts.seriesIndex] + '%';
+            }
+        },
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'bottom'
+                },
+                colors: ['#FF387B', '#61A4F6'],
+            }
+        }]
+    };
+
+    let chart_region = new ApexCharts(document.querySelector("#pie-chart-region"), options_region);
+    chart_region.render();
+
+</script>

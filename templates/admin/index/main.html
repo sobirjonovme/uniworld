@@ -1,0 +1,41 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+
+{% block bodyclass %}
+    {{ block.super }} dashboard
+{% endblock %}
+
+{% block content_title %}
+    {% trans 'Dashboard' %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></li>
+        <li class="breadcrumb-item">{% trans 'Dashboard' %}</li>
+    </ol>
+{% endblock %}
+
+{% block extrastyle %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.30.0/dist/apexcharts.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.30.0/dist/apexcharts.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    {% get_side_menu using="app_list" as dashboard_list %}
+    {% if dashboard_list %}
+        {% widthratio dashboard_list|length 2 1 as middle %}
+    {% endif %}
+
+    {% if request.user.is_superuser %}
+        {% include "admin/index/superuser.html" %}
+    {% endif %}
+
+{% endblock %}
