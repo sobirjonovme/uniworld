@@ -92,7 +92,9 @@ def get_applications_statistics_via_region(user):
         return
 
     total_applications = applications.count()
-    applications_stats = applications.values("region").annotate(count=models.Count("region"))
+    applications_stats = (
+        applications.filter(region__isnull=False).values("region").annotate(count=models.Count("region"))
+    )
 
     counts = []
     percentages = []
@@ -114,7 +116,11 @@ def get_applications_statistics_via_country(user):
         return
 
     total_applications = applications.count()
-    applications_stats = applications.values("university__country").annotate(count=models.Count("university__country"))
+    applications_stats = (
+        applications.filter(university__country__isnull=False)
+        .values("university__country")
+        .annotate(count=models.Count("university__country"))
+    )
     countries_count = applications_stats.count()
 
     all_datas = []
