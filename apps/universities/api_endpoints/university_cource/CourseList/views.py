@@ -3,6 +3,7 @@ from rest_framework.generics import ListAPIView
 
 from apps.universities.filters import UniversityCourseFilter
 from apps.universities.models import University, UniversityCourse
+from apps.universities.pagination import CoursePagination
 
 from .serializers import UniversityCourseListSerializer
 
@@ -10,6 +11,7 @@ from .serializers import UniversityCourseListSerializer
 class UniversityCourseListAPIView(ListAPIView):
     queryset = UniversityCourse.objects.all()
     serializer_class = UniversityCourseListSerializer
+    pagination_class = CoursePagination
 
     filter_backends = (DjangoFilterBackend,)
     filterset_class = UniversityCourseFilter
