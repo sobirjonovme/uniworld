@@ -29,13 +29,29 @@
 {% endblock %}
 
 {% block content %}
+    <style>
+        .operator-title {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            font-size: 40px;
+            color: #171616;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+    </style>
+
     {% get_side_menu using="app_list" as dashboard_list %}
     {% if dashboard_list %}
         {% widthratio dashboard_list|length 2 1 as middle %}
     {% endif %}
 
+    {% include "admin/index/common.html" %}
+
+    <h1 class="operator-title">Operatorlar statistikasi</h1>
+
+    {% include "admin/index/operators_table.html" %}
+
     {% if request.user.is_superuser %}
-        {% include "admin/index/superuser.html" %}
     {% endif %}
 
 {% endblock %}

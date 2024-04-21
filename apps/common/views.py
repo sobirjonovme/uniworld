@@ -4,7 +4,7 @@ from apps.common.services.dashboard import (
     get_applications_statistics_via_country,
     get_applications_statistics_via_gender,
     get_applications_statistics_via_region,
-    get_applications_statistics_via_status)
+    get_applications_statistics_via_status, get_operators_statistics)
 
 
 # Create your views here.
@@ -15,6 +15,7 @@ def index_page(self, request, extra_context=None):
         "applications_gender": get_applications_statistics_via_gender(user),
         "applications_region": get_applications_statistics_via_region(user),
         "applications_country": get_applications_statistics_via_country(user),
+        "operators": get_operators_statistics(user),
     }
 
     template = "admin/index/main.html"

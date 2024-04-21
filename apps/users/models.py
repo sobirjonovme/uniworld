@@ -28,7 +28,10 @@ class User(AbstractUser, BaseModel):
         verbose_name_plural = _("Users")
 
     def __str__(self):
-        name = f"{self.first_name} {self.last_name}" if self.first_name else self.username
+        if self.first_name:
+            name = f"{self.first_name} {self.last_name}" if self.last_name else self.first_name
+        else:
+            name = self.username
         return name
 
     def save(self, *args, **kwargs):

@@ -1,0 +1,74 @@
+<style>
+    table {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 350;
+    }
+
+    th {
+        font-weight: 700;
+    }
+
+    th, td {
+        text-align: center;
+    }
+
+    table .total-count {
+        color: #171616;
+        font-weight: 500;
+        font-size: 16px;
+    }
+
+    table .number {
+        color: #0542a3;
+        margin-right: 7px;
+        font-weight: 500;
+    }
+
+    table .percentage {
+        color: #027a32;
+        font-weight: 500;
+    }
+
+</style>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">T/r</th>
+      <th scope="col">ID</th>
+      <th scope="col">Operator</th>
+      <th scope="col" style="color: #4a4848">Jami arizalar soni</th>
+      <th scope="col" style="color: #073eb5">Ko'rilmagan arizalar</th>
+      <th scope="col" style="color: #c2940c">Jarayondagi arizalar</th>
+      <th scope="col" style="color: #059613">Tugatilgan arizalar</th>
+      <th scope="col" style="color: #c91023">Bekor qilingan arizalar</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for operator in operators %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>#{{ operator.id }}</td>
+      <td>{{ operator.name }}</td>
+      <td class="total-count">{{ operator.applications_count }}</td>
+      <td>
+        <span class="number"> {{ operator.applications_received }} </span>
+        (<span class="percentage">{{ operator.received_percentage }}%</span>)
+      </td>
+      <td>
+        <span class="number"> {{ operator.applications_progress }} </span>
+        (<span class="percentage">{{ operator.progress_percentage }}%</span>)
+      </td>
+      <td>
+        <span class="number"> {{ operator.applications_finished }} </span>
+        (<span class="percentage">{{ operator.finished_percentage }}%</span>)
+      </td>
+      <td>
+        <span class="number"> {{ operator.applications_cancelled }} </span>
+        (<span class="percentage">{{ operator.cancelled_percentage }}%</span>)
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

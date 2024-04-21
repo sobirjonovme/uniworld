@@ -1,10 +1,12 @@
 from django.db import models
+from django.db.models.functions import Concat
 
 from apps.applications.choices import ApplicationStatus
 from apps.applications.models import Application
 from apps.common.choices import GenderChoices
 from apps.common.models import Country, Region
 from apps.users.choices import UserRoles
+from apps.users.models import User
 
 
 def get_color(index):
@@ -33,6 +35,17 @@ def get_applications(user):
         applications = None
 
     return applications
+
+
+def get_operators(user):
+    if user.is_superuser:
+        operators = User.objects.filter(role=UserRoles.AGENCY_OPERATOR)
+    elif user.role == UserRoles.AGENCY_OWNER:
+        operators = User.objects.filter(agency=user.agency, role=UserRoles.AGENCY_OPERATOR)
+    else:
+        operators = None
+
+    return operators
 
 
 def get_applications_statistics_via_status(user):
@@ -145,5 +158,68 @@ def get_applications_statistics_via_country(user):
         divided_datas.append({"left": all_datas[i], "right": all_datas[i + 1] if i + 1 < countries_count else None})
 
     data = {"total_applications": total_applications, "all_datas": all_datas, "divided_datas": divided_datas}
+
+    return data
+
+
+def get_operators_statistics(user):
+    operators = get_operators(user)
+    if operators is None:
+        return
+
+    operators_stats = operators.annotate(
+        name=Concat("first_name", models.Value(" "), "last_name"),
+        # count applications
+        applications_count=models.Count("applications"),
+        applications_received=models.Count(
+            "applications", filter=models.Q(applications__status=ApplicationStatus.RECEIVED)
+        ),
+        applications_progress=models.Count(
+            "applications", filter=models.Q(applications__status=ApplicationStatus.IN_PROGRESS)
+        ),
+        applications_finished=models.Count(
+            "applications", filter=models.Q(applications__status=ApplicationStatus.FINISHED)
+        ),
+        applications_cancelled=models.Count(
+            "applications", filter=models.Q(applications__status=ApplicationStatus.CANCELLED)
+        ),
+        # calculate percentages of applications
+        received_percentage=models.Case(
+            models.When(applications_count=0, then=0),
+            default=models.F("applications_received") * 100 / models.F("applications_count"),
+            output_field=models.IntegerField(),
+        ),
+        progress_percentage=models.Case(
+            models.When(applications_count=0, then=0),
+            default=models.F("applications_progress") * 100 / models.F("applications_count"),
+            output_field=models.IntegerField(),
+        ),
+        finished_percentage=models.Case(
+            models.When(applications_count=0, then=0),
+            default=models.F("applications_finished") * 100 / models.F("applications_count"),
+            output_field=models.IntegerField(),
+        ),
+        cancelled_percentage=models.Case(
+            models.When(applications_count=0, then=0),
+            default=models.F("applications_cancelled") * 100 / models.F("applications_count"),
+            output_field=models.IntegerField(),
+        ),
+    )
+
+    operators_stats = operators_stats.order_by("-applications_count")
+
+    data = operators_stats.values(
+        "id",
+        "name",
+        "applications_count",
+        "applications_received",
+        "applications_progress",
+        "applications_finished",
+        "applications_cancelled",
+        "received_percentage",
+        "progress_percentage",
+        "finished_percentage",
+        "cancelled_percentage",
+    )
 
     return data
