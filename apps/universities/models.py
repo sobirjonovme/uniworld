@@ -120,7 +120,7 @@ class UniversityCourse(BaseModel):
     qualification_level = models.CharField(
         verbose_name=_("Qualification level"), max_length=32, choices=QualificationLevels.choices
     )
-    duration = models.PositiveIntegerField(verbose_name=_("Duration"), help_text=_("In years"))
+    duration = models.DecimalField(verbose_name=_("Duration"), help_text=_("In years"), max_digits=3, decimal_places=1)
     study_type = models.CharField(verbose_name=_("Study type"), max_length=32, choices=StudyTypes.choices)
     tuition_fee = models.DecimalField(
         verbose_name=_("Tuition fee"), max_digits=10, decimal_places=2, help_text=_("In USD")
