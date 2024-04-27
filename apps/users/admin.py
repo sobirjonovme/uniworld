@@ -94,7 +94,7 @@ class OperatorAdmin(BaseUserAdmin):
                     "phone_number",
                     "email",
                     "is_active",
-                    "password",
+                    # "password",
                     "last_login",
                     "date_joined",
                 )
@@ -141,9 +141,12 @@ class OperatorAdmin(BaseUserAdmin):
         return obj
 
     def has_add_permission(self, request):
-        if request.user.role == UserRoles.AGENCY_OWNER:
-            return True
+        return False
 
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
         return False
 
     def get_queryset(self, request):
