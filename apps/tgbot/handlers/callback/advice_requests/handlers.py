@@ -31,3 +31,5 @@ def get_advice_request_status(update: Update, context: CallbackContext, user: Us
         )
 
         return
+
+    update.callback_query.answer()

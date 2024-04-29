@@ -30,3 +30,5 @@ def get_application_status(update: Update, context: CallbackContext, user: User)
         )
 
         return
+
+    update.callback_query.answer()
