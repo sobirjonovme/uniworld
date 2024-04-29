@@ -2,7 +2,7 @@ from django.utils.translation import gettext as _
 from telegram import ParseMode
 
 from apps.applications.choices import ApplicationStatus
-from apps.tgbot.handlers.applications.keyboards import \
+from apps.tgbot.handlers.callback.applications.keyboards import \
     get_applications_status_buttons
 from apps.tgbot.main import bot
 
@@ -57,6 +57,8 @@ def send_application_info_to_operator(application):
             parse_mode=ParseMode.HTML,
         )
     except Exception:
+        # TODO: log exception
+        # STOP execution of the function if an error occurred
         return
 
     application.sent_telegram = True

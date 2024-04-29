@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.core.management import BaseCommand
-from mm_auth.tgbot.services.on_startup import set_up_commands, set_webhook
 from telegram import Bot
+
+from apps.tgbot.services.on_startup import set_up_commands, set_webhook
 
 
 class Command(BaseCommand):

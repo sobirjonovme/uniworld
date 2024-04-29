@@ -106,3 +106,20 @@ class AboutUs(SingletonModel):
 
     def __str__(self):
         return str(_("About us"))
+
+
+class SiteSettings(SingletonModel):
+    advice_requests_chat_id = models.CharField(
+        verbose_name=_("Advice requests Chat ID"),
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text=_("Chat ID in Telegram"),
+    )
+
+    class Meta:
+        verbose_name = _("Site settings")
+        verbose_name_plural = _("Site settings")
+
+    def __str__(self):
+        return str(_("Site settings"))

@@ -9,6 +9,12 @@ class ApplicationStatus(models.TextChoices):
     CANCELLED = "CANCELLED", _("Cancelled")
 
 
+class AdvisorApplicationStatus(models.TextChoices):
+    NEW = "NEW", _("New")
+    TALKED = "TALKED", _("Talked")
+    NOT_INTERESTED = "NOT_INTERESTED", _("Not Interested")
+
+
 class WhoAreYouChoices(models.TextChoices):
     STUDENT = "STUDENT", _("Student")
     PARENT = "PARENT", _("Parent")

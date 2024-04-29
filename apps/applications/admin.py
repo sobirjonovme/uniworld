@@ -3,18 +3,18 @@ from django.utils.safestring import mark_safe
 
 from apps.users.models import OperatorCountry, UserRoles
 
-from .choices import ApplicationStatus
+from .choices import AdvisorApplicationStatus, ApplicationStatus
 from .models import AdvisorApplication, Application
 
 
 # Register your models here.
 @admin.register(Application)
 class ApplicationAdmin(admin.ModelAdmin):
-    list_display = ("id", "first_name", "last_name", "phone_number", "university", "status_")
+    list_display = ("id", "first_name", "last_name", "phone_number", "university", "status_", "sent_telegram")
     list_display_links = ("id", "first_name", "last_name")
     search_fields = ("first_name", "last_name", "phone_number")
     autocomplete_fields = ("university", "course", "agency", "region", "operator")
-    list_filter = ("status",)
+    list_filter = ("status", "sent_telegram")
 
     def status_(self, obj):
         status_colors = {
@@ -77,18 +77,18 @@ class ApplicationAdmin(admin.ModelAdmin):
 
 @admin.register(AdvisorApplication)
 class AdvisorApplicationAdmin(admin.ModelAdmin):
-    list_display = ("id", "first_name", "last_name", "phone_number", "country", "region", "status_")
+    list_display = ("id", "first_name", "last_name", "phone_number", "country", "region", "status_", "sent_telegram")
     list_display_links = ("id", "first_name", "last_name")
     search_fields = ("first_name", "last_name", "phone_number")
     autocomplete_fields = ("country", "region", "agency")
-    list_filter = ("status",)
+    list_filter = ("status", "sent_telegram")
 
     def status_(self, obj):
         status_colors = {
-            ApplicationStatus.RECEIVED: "#1fafed",
-            ApplicationStatus.IN_PROGRESS: "#3e484f",
-            ApplicationStatus.FINISHED: "green",
-            ApplicationStatus.CANCELLED: "red",
+            AdvisorApplicationStatus.NEW: "#1fafed",
+            # AdvisorApplicationStatus.TALKED: "#3e484f",
+            AdvisorApplicationStatus.TALKED: "green",
+            AdvisorApplicationStatus.NOT_INTERESTED: "red",
         }
         return mark_safe(f'<span style="color: {status_colors[obj.status]}"><b>{obj.get_status_display()}</b></span>')
 

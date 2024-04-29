@@ -6,8 +6,8 @@ from queue import Queue
 from telegram import Bot
 from telegram.ext import CallbackQueryHandler, CommandHandler, Dispatcher
 
-from apps.tgbot.handlers.applications.handlers import (command_start,
-                                                       get_application_status)
+from apps.tgbot.handlers.callback.handlers import common_callback_query_handler
+from apps.tgbot.handlers.common.handlers import command_start
 
 
 def setup_dispatcher(token):
@@ -27,5 +27,5 @@ def setup_dispatcher(token):
     )
 
     dp.add_handler(CommandHandler("start", command_start))
-    dp.add_handler(CallbackQueryHandler(get_application_status))
+    dp.add_handler(CallbackQueryHandler(common_callback_query_handler))
     return dp

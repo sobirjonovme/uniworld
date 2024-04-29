@@ -4,7 +4,8 @@ from solo.admin import SingletonModelAdmin
 
 from apps.common.mixins import TabbedTranslationMixin
 from apps.common.models import (AboutUs, Country, FrontendTranslation,
-                                PrivacyPolicy, Region, TermsAndConditions)
+                                PrivacyPolicy, Region, SiteSettings,
+                                TermsAndConditions)
 from apps.common.views import index_page
 
 # @admin.register(VersionHistory)
@@ -55,6 +56,11 @@ class PrivacyPolicyAdmin(SingletonModelAdmin, TranslationAdmin):
 
 @admin.register(AboutUs)
 class AboutUsAdmin(TabbedTranslationMixin, SingletonModelAdmin):
+    pass
+
+
+@admin.register(SiteSettings)
+class SiteSettingsAdmin(SingletonModelAdmin):
     pass
 
 
