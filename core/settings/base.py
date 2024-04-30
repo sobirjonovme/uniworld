@@ -90,6 +90,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -173,6 +174,7 @@ MODELTRANSLATION_FALLBACK_LANGUAGES = {
     "uz": ("en", "ru"),
     "ru": ("uz", "en"),
 }
+
 MODELTRANSLATION_LANGUAGES_CHOICES = (
     ("en", _("English")),
     ("uz", _("Uzbek")),
