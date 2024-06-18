@@ -21,3 +21,8 @@ def command_start(update: Update, context: CallbackContext, user: User):
             text=str(_("Assalomu alaykum\nXush kelibsiz!")),
         )
         return state.END
+
+    update.message.reply_text(
+        text=str(_("Assalomu alaykum\nXush kelibsiz!")),
+    )
+    return state.END

@@ -155,7 +155,6 @@ def get_certificate(update: Update, context: CallbackContext, user: User):
     data = context.user_data
     data["username"] = update.effective_user.username
 
-    print(data)
     send_eligibility_check_application_message_to_group(user_data=data)
 
     msg = str(_("Rahmat! Sizning ma'lumotlaringiz qabul qilindi."))
