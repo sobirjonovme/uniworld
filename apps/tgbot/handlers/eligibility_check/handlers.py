@@ -157,7 +157,12 @@ def get_certificate(update: Update, context: CallbackContext, user: User):
 
     send_eligibility_check_application_message_to_group(user_data=data)
 
-    msg = str(_("Rahmat! Sizning ma'lumotlaringiz qabul qilindi."))
+    msg = str(
+        _(
+            "Rahmat! Sizning ma'lumotlaringiz qabul qilindi.\n\n"
+            "Bizning mutaxassislarimiz sizga eng mos keluvchi o'quv muassasini topib, tez orada siz bilan bog'lanishadi"
+        )
+    )
     context.bot.send_message(
         chat_id=update.message.chat_id,
         text=msg,
