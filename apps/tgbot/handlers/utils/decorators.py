@@ -47,13 +47,13 @@ def get_user(func):
             return None
 
         user = User.objects.filter(telegram_id=effective_user.id).first()
-        if not user:
-            txt = "You cannot use this bot. It is not for public use!"
-            try:
-                context.bot.send_message(chat_id=effective_user.id, text=txt)
-            except Exception:
-                pass
-            return None
+        # if not user:
+        #     txt = "You cannot use this bot. It is not for public use!"
+        #     try:
+        #         context.bot.send_message(chat_id=effective_user.id, text=txt)
+        #     except Exception:
+        #         pass
+        #     return None
 
         return func(update, context, user, *args, **kwargs)
 

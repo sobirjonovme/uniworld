@@ -10,12 +10,12 @@ from apps.tgbot.main import bot
 def set_webhook(bot_instance: Bot = bot) -> Tuple[bool, str]:
     webhook_url = settings.HOST + reverse("tgbot:webhook", args=[settings.BOT_TOKEN])
 
-    webhook_info = bot_instance.get_webhook_info()
-    if webhook_info.url != webhook_url:
-        bot_instance.set_webhook(url=webhook_url, secret_token=settings.BOT_SECRET_KEY)
-        return True, webhook_url
+    # webhook_info = bot_instance.get_webhook_info()
+    # if webhook_info.url == webhook_url:
+    #     return False, webhook_url
 
-    return False, webhook_url
+    bot_instance.set_webhook(url=webhook_url, secret_token=settings.BOT_SECRET_KEY)
+    return True, webhook_url
 
 
 def delete_webhook(bot_instance: Bot = bot) -> None:

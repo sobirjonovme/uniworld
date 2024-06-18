@@ -18,3 +18,13 @@ class AdvisorApplicationStatus(models.TextChoices):
 class WhoAreYouChoices(models.TextChoices):
     STUDENT = "STUDENT", _("Student")
     PARENT = "PARENT", _("Parent")
+
+
+class CurrentEducationLevelChoices(models.TextChoices):
+    HIGH_SCHOOL = "HIGH_SCHOOL", _("High School")
+    BACHELOR = "BACHELOR", _("Bachelor")
+
+
+class NeededEducationLevelChoices(models.TextChoices):
+    BACHELOR = "BACHELOR", _("Bachelor")
+    MASTER = "MASTER", _("Master")
