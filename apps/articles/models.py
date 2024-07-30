@@ -30,10 +30,9 @@ class Article(BaseModel):
 
 class PathwayAdvice(BaseModel):
     title = models.CharField(verbose_name=_("Title"), max_length=255)
-    icon = ResizedImageField(
+    icon = models.FileField(
         verbose_name=_("Icon"),
-        upload_to="pathway_advices/icons/",
-        blank=True,
+        upload_to="articles/pathway-advices/icons/",
         null=True,
     )
     description = models.CharField(verbose_name=_("Description"), max_length=255)

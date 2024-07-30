@@ -6,14 +6,13 @@ from .models import Article, PathwayAdvice
 
 
 # Register your models here.
-class ArticleInline(admin.TabularInline):
-    model = Article
-    extra = 0
-
-
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ("title", "published_at")
+    list_display = ("id", "title", "published_at")
+    list_display_links = (
+        "id",
+        "title",
+    )
     search_fields = ("title",)
     prepopulated_fields = {"slug": ("title",)}
 
@@ -21,6 +20,10 @@ class ArticleAdmin(admin.ModelAdmin):
 @admin.register(PathwayAdvice)
 class PathwayAdviceAdmin(admin.ModelAdmin):
     list_display = ("id", "_icon", "title", "description")
+    list_display_links = (
+        "id",
+        "title",
+    )
     search_fields = ("title",)
 
     def _icon(self, obj):
