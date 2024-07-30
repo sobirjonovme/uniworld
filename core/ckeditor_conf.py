@@ -19,6 +19,7 @@ CKEDITOR_ALLOW_NONIMAGE_FILES = True
 
 CKEDITOR_CONFIGS = {
     "default": {
+        "versionCheck": False,
         "skin": "moono",
         # 'skin': 'office2013',
         # 'toolbar': 'Basic',
