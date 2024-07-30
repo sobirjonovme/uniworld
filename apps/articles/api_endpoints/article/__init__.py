@@ -1,0 +1,1 @@
+from .ArticleDetail import *  # noqa
