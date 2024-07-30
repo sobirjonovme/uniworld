@@ -52,6 +52,7 @@ DJANGO_APPS = [
 CUSTOM_APPS = [
     "apps.django_admin_inline_paginator",
     "apps.applications",
+    "apps.articles",
     "apps.common",
     "apps.organizations",
     "apps.tgbot",
@@ -64,6 +65,7 @@ THIRD_PARTY_APPS = [
     "drf_yasg",
     "corsheaders",
     "ckeditor",
+    "ckeditor_uploader",
 ]
 
 REST_FRAMEWORK = {

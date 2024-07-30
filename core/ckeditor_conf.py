@@ -98,6 +98,7 @@ CKEDITOR_CONFIGS = {
                 "name": "insert",
                 "items": [
                     "Image",
+                    "Table",
                     "Flash",
                     "HorizontalRule",
                     "Smiley",
