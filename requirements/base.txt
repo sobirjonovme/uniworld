@@ -13,3 +13,4 @@ Pillow==10.2.0
 django-ckeditor==6.7.1
 django-resized==1.0.2
 python-telegram-bot==13.15  # last sync version
+django-jsonform==2.22.0

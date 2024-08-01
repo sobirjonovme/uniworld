@@ -9,6 +9,11 @@ class ApplicationStatus(models.TextChoices):
     CANCELLED = "CANCELLED", _("Cancelled")
 
 
+class AdvisorApplicationType(models.TextChoices):
+    ELIGIBILITY_CHECK = "ELIGIBILITY_CHECK", _("Eligibility Check")
+    SPEAK_WITH_ADVISOR = "SPEAK_WITH_ADVISOR", _("Speak with Advisor")
+
+
 class AdvisorApplicationStatus(models.TextChoices):
     NEW = "NEW", _("New")
     TALKED = "TALKED", _("Talked")
@@ -28,3 +33,26 @@ class CurrentEducationLevelChoices(models.TextChoices):
 class NeededEducationLevelChoices(models.TextChoices):
     BACHELOR = "BACHELOR", _("Bachelor")
     MASTER = "MASTER", _("Master")
+
+
+class CertificateChoices(models.TextChoices):
+    IELTS = "IELTS", _("IELTS")
+    TOEFL = "TOEFL", _("TOEFL")
+    SAT = "SAT", _("SAT")
+    GMAT = "GMAT", _("GMAT")
+
+    @classmethod
+    def get_choices_schema(cls):
+        return [{"title": choice.label, "value": choice.value} for choice in cls]
+
+
+CERTIFICATES_SCHEMA = {
+    "type": "list",
+    "items": {
+        "type": "dict",
+        "keys": {
+            "certificate": {"type": "string", "choices": CertificateChoices.get_choices_schema()},
+            "score": {"type": "number"},
+        },
+    },
+}

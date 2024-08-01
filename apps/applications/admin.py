@@ -3,7 +3,8 @@ from django.utils.safestring import mark_safe
 
 from apps.users.models import OperatorCountry, UserRoles
 
-from .choices import AdvisorApplicationStatus, ApplicationStatus
+from .choices import (AdvisorApplicationStatus, AdvisorApplicationType,
+                      ApplicationStatus)
 from .models import AdvisorApplication, Application
 
 
@@ -80,8 +81,9 @@ class AdvisorApplicationAdmin(admin.ModelAdmin):
     list_display = ("id", "first_name", "last_name", "phone_number", "country", "region", "status_", "sent_telegram")
     list_display_links = ("id", "first_name", "last_name")
     search_fields = ("first_name", "last_name", "phone_number")
-    autocomplete_fields = ("country", "region", "agency")
+    autocomplete_fields = ("country", "region", "agency", "needed_specialty")
     list_filter = ("status", "sent_telegram")
+    readonly_fields = ("created_at", "updated_at")
 
     def status_(self, obj):
         status_colors = {
@@ -104,6 +106,38 @@ class AdvisorApplicationAdmin(admin.ModelAdmin):
 
         return qs
 
+    def get_fields(self, request, obj=None):
+        fields = [
+            "type",
+            "status",
+            "first_name",
+            "last_name",
+            "phone_number",
+            "sent_telegram",
+        ]
+
+        if obj.type == AdvisorApplicationType.SPEAK_WITH_ADVISOR:
+            fields.extend(
+                [
+                    "who_are_you",
+                    "country",
+                    "region",
+                ]
+            )
+        elif obj.type == AdvisorApplicationType.ELIGIBILITY_CHECK:
+            fields.extend(
+                [
+                    "age",
+                    "current_education_level",
+                    "needed_education_level",
+                    "needed_specialty",
+                    "gpa",
+                    "certificates",
+                ]
+            )
+
+        return fields
+
     def get_readonly_fields(self, request, obj=None):
         user = request.user
         readonly_fields = list(self.readonly_fields)
@@ -113,6 +147,7 @@ class AdvisorApplicationAdmin(admin.ModelAdmin):
 
         if user.role in [UserRoles.AGENCY_OWNER, UserRoles.AGENCY_OPERATOR]:
             extra_readonly_fields = [
+                "type",
                 "first_name",
                 "last_name",
                 "who_are_you",
@@ -120,6 +155,11 @@ class AdvisorApplicationAdmin(admin.ModelAdmin):
                 "country",
                 "region",
                 "agency",
+                "age",
+                "current_education_level",
+                "needed_education_level",
+                "needed_specialty",
+                "gpa",
             ]
             readonly_fields.extend(extra_readonly_fields)
 

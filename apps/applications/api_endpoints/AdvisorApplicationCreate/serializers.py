@@ -10,17 +10,28 @@ class AdvisorApplicationCreateSerializer(serializers.ModelSerializer):
         model = AdvisorApplication
         fields = (
             "id",
+            "type",
             "first_name",
             "last_name",
-            "who_are_you",
             "phone_number",
+            # fields for speaking with advisor
+            "who_are_you",
             "country",
             "region",
+            # fields for eligibility check
+            "age",
+            "current_education_level",
+            "needed_education_level",
+            "needed_specialty",
+            "gpa",
+            "certificates",
         )
-        extra_kwargs = {
-            "country": {"required": True, "allow_null": False},
-            "region": {"required": True, "allow_null": False},
-        }
+
+    def validate(self, data):
+        advisor_application = AdvisorApplication(**data)
+        advisor_application.validate_via_type()
+
+        return data
 
     def create(self, validated_data):
         advisor_application = AdvisorApplication(**validated_data)
