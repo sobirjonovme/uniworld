@@ -9,7 +9,7 @@ from apps.common.models import BaseModel
 from .choices import (CERTIFICATES_SCHEMA, AdvisorApplicationStatus,
                       AdvisorApplicationType, ApplicationStatus,
                       CurrentEducationLevelChoices,
-                      NeededEducationLevelChoices, WhoAreYouChoices)
+                      NeededEducationLevelChoices, WhoAreYouChoices, ContactUsInquiryType)
 
 
 # Create your models here.
@@ -131,3 +131,24 @@ class AdvisorApplication(BaseModel):
     def clean(self):
         self.validate_via_type()
         super().clean()
+
+
+class ContactUsApplication(BaseModel):
+    first_name = models.CharField(verbose_name=_("First Name"), max_length=255)
+    last_name = models.CharField(verbose_name=_("Last Name"), max_length=255)
+    telegram_username = models.CharField(verbose_name=_("Telegram Username"), max_length=255)
+    phone_number = models.CharField(verbose_name=_("Phone Number"), max_length=31)
+    inquiry_type = models.CharField(
+        verbose_name=_("Inquiry Type"), max_length=31, choices=ContactUsInquiryType.choices
+    )
+    consulting_agency = models.ForeignKey(
+        verbose_name=_("Consulting Agency"), to="organizations.Agency", on_delete=models.SET_NULL, null=True, blank=True
+    )
+    message = models.TextField(verbose_name=_("Message"))
+
+    class Meta:
+        verbose_name = _("Contact Us Application")
+        verbose_name_plural = _("Contact Us Applications")
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"

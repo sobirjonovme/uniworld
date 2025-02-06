@@ -46,6 +46,10 @@ class CertificateChoices(models.TextChoices):
         return [{"title": choice.label, "value": choice.value} for choice in cls]
 
 
+class ContactUsInquiryType(models.TextChoices):
+    NEED_HELP = "NEED_HELP", _("Need Help")
+    COMPLAINT = "COMPLAINT", _("Complaint")
+
 CERTIFICATES_SCHEMA = {
     "type": "list",
     "items": {

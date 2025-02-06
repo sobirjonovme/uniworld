@@ -5,7 +5,7 @@ from apps.users.models import OperatorCountry, UserRoles
 
 from .choices import (AdvisorApplicationStatus, AdvisorApplicationType,
                       ApplicationStatus)
-from .models import AdvisorApplication, Application
+from .models import AdvisorApplication, Application, ContactUsApplication
 
 
 # Register your models here.
@@ -164,3 +164,13 @@ class AdvisorApplicationAdmin(admin.ModelAdmin):
             readonly_fields.extend(extra_readonly_fields)
 
         return readonly_fields
+
+
+@admin.register(ContactUsApplication)
+class ContactUsApplicationAdmin(admin.ModelAdmin):
+    list_display = ("id", "first_name", "last_name", "phone_number", "inquiry_type", "consulting_agency", "created_at")
+    list_display_links = ("id", "first_name", "last_name")
+    search_fields = ("first_name", "last_name", "phone_number")
+    list_filter = ("inquiry_type", "consulting_agency")
+    autocomplete_fields = ("consulting_agency",)
+    readonly_fields = ("created_at", "updated_at")
