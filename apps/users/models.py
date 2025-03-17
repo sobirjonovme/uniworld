@@ -68,7 +68,7 @@ class OperatorCountry(BaseModel):
         return f"{self.user} - {self.country}"
 
     def clean(self):
-        if self.user.role != UserRoles.AGENCY_OPERATOR:
+        if self.user.role not in [UserRoles.AGENCY_OPERATOR, UserRoles.AGENCY_OWNER]:
             raise ValidationError({"user": _("User should be operator")})
 
         agency_country_ids = self.user.agency.countries.values_list("country_id", flat=True)
