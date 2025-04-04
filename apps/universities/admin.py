@@ -1,5 +1,5 @@
 from django.contrib import admin
-from modeltranslation.admin import TranslationAdmin
+from modeltranslation.admin import TranslationAdmin, TranslationStackedInline
 from nested_inline.admin import NestedModelAdmin, NestedStackedInline
 
 from apps.users.choices import UserRoles
@@ -21,7 +21,7 @@ class CourseAdmissionRequirementInline(NestedStackedInline):
     ordering = ("-id",)
 
 
-class UniversityCourseInline(NestedStackedInline):
+class UniversityCourseInline(NestedStackedInline, TranslationStackedInline):
     model = UniversityCourse
     inlines = (CourseAdmissionRequirementInline,)
     extra = 0
@@ -62,7 +62,7 @@ class SpecialtyAdmin(TranslationAdmin):
 
 
 @admin.register(UniversityCourse)
-class UniversityCourseAdmin(NestedModelAdmin):
+class UniversityCourseAdmin(NestedModelAdmin, TranslationAdmin):
     list_display = ("id", "name", "university", "specialty", "qualification_level", "study_type")
     list_display_links = ("id", "name")
     search_fields = ("name", "name_uz", "name_en", "name_ru")
