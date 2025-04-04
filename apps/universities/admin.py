@@ -24,9 +24,8 @@ class CourseAdmissionRequirementInline(NestedStackedInline):
 class UniversityCourseInline(NestedStackedInline, TranslationStackedInline):
     model = UniversityCourse
     inlines = (CourseAdmissionRequirementInline,)
-    extra = 0
+    extra = 5
     ordering = ("-id",)
-    per_page = 5
 
 
 @admin.register(University)
