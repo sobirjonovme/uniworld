@@ -64,9 +64,11 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "drf_yasg",
     "corsheaders",
-    "ckeditor",
-    "ckeditor_uploader",
+    # "ckeditor",
+    # "ckeditor_uploader",
     "django_jsonform",
+    "tinymce",
+    "nested_inline",
 ]
 
 REST_FRAMEWORK = {
@@ -267,3 +269,50 @@ RUN_BOT_CELERY = env.bool("RUN_BOT_CELERY", False)
 BOT_TOKEN = env.str("BOT_TOKEN", "")
 BOT_SECRET_KEY = env.str("BOT_SECRET_KEY", "")
 TELEGRAM_LOGS_CHAT_ID = env.str("TELEGRAM_LOGS_CHAT_ID", "")
+
+
+# ================== TINYMCE CONFIGURATION ==================
+TINYMCE_DEFAULT_CONFIG = {
+    "theme": "silver",
+    "height": 500,
+    "menubar": False,
+    "plugins": "advlist autolink lists link image charmap preview anchor "
+    "searchreplace visualblocks code fullscreen insertdatetime media table "
+    "code help wordcount",
+    "toolbar": "fullscreen preview | blocks | "
+    "bold italic backcolor | image code blockquote | alignleft aligncenter "
+    "alignright alignjustify | bullist numlist outdent indent | "
+    "removeformat undo redo visualblocks help",
+    "file_picker_callback": """function (cb, value, meta) {
+        var input = document.createElement("input");
+        input.setAttribute("type", "file");
+        if (meta.filetype === "image") {
+            input.setAttribute("accept", "image/*");
+        }
+        if (meta.filetype == "media") {
+            input.setAttribute("accept", "video/*");
+        }
+
+        input.onchange = function () {
+            var file = this.files[0];
+            var formData = new FormData();
+            formData.append("file", file);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/api/v1/common/tinymce/upload/", true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    var json = JSON.parse(xhr.responseText);
+                    cb(json.location, { title: file.name });
+                } else {
+                    alert("Image upload failed!");
+                }
+            };
+            xhr.send(formData);
+        };
+        input.click();
+    }""",
+    "relative_urls": False,  # Prevent relative URLs
+    "remove_script_host": False,  # Include the protocol and domain in the URL
+    "convert_urls": True,  # Ensure URLs are converted properly
+}

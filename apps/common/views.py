@@ -1,4 +1,13 @@
+import os
+from datetime import datetime
+
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+from django.http import JsonResponse
 from django.template.response import TemplateResponse
+from django.views import View
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAdminUser
 
 from apps.common.services.dashboard import (
     get_applications_statistics_via_country,
@@ -29,3 +38,18 @@ def index_page(self, request, extra_context=None):
     }
     request.current_app = self.name
     return TemplateResponse(request, template, context)
+
+
+class TinyMCEUploadView(View):
+    permission_classes = (IsAdminUser,)
+    authentication_classes = (SessionAuthentication,)
+
+    def post(self, request):
+        if request.FILES.get("file"):
+            file = request.FILES["file"]
+            file_name = default_storage.save(
+                os.path.join("uploads", datetime.now().strftime("%Y/%m"), file.name), ContentFile(file.read())
+            )
+            file_url = default_storage.url(file_name)
+            return JsonResponse({"location": file_url})
+        return JsonResponse({"error": "Invalid request"}, status=400)

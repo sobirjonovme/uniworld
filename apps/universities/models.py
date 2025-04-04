@@ -1,8 +1,9 @@
-from ckeditor.fields import RichTextField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django_resized import ResizedImageField
+from tinymce.models import HTMLField
 
+from apps.common.choices import CurrencyChoices
 from apps.common.models import BaseModel, ModifiedArrayField
 
 from .choices import (InstitutionTypes, MonthChoices, QualificationLevels,
@@ -58,15 +59,17 @@ class University(BaseModel):
     has_dormitory = models.BooleanField(verbose_name=_("Has dormitory"), default=False)
     students_count = models.CharField(verbose_name=_("Students count"), max_length=255, blank=True, null=True)
     address = models.CharField(verbose_name=_("Address"), max_length=255, blank=True, null=True)
-    about = RichTextField(verbose_name=_("About"), blank=True, null=True)
-    full_scolarship = models.BooleanField(verbose_name=_("Full scolarship"), default=False)
+    about = HTMLField(verbose_name=_("About"), blank=True, null=True)
+    full_scolarship = models.BooleanField(verbose_name=_("Full scholarship"), default=False)
     is_featured = models.BooleanField(verbose_name=_("Is featured"), default=False)
+    free_consultation = models.BooleanField(verbose_name=_("Free consultation"), default=False)
     intake_months = ModifiedArrayField(
         verbose_name=_("Intake months"),
         base_field=models.CharField(max_length=32, choices=MonthChoices.choices),
         null=True,
         blank=True,
     )
+    scholarship_description = HTMLField(verbose_name=_("Scholarship description"), blank=True, null=True)
     # Costs
     tuition_fee = models.CharField(
         verbose_name=_("Tuition fee"), max_length=255, help_text=_("yearly tuition fee"), null=True, blank=True
@@ -123,7 +126,13 @@ class UniversityCourse(BaseModel):
     duration = models.DecimalField(verbose_name=_("Duration"), help_text=_("In years"), max_digits=3, decimal_places=1)
     study_type = models.CharField(verbose_name=_("Study type"), max_length=32, choices=StudyTypes.choices)
     tuition_fee = models.DecimalField(
-        verbose_name=_("Tuition fee"), max_digits=10, decimal_places=2, help_text=_("In USD")
+        verbose_name=_("Tuition fee"), max_digits=10, decimal_places=2, help_text=_("currency is selected below")
+    )
+    tuition_fee_currency = models.CharField(
+        verbose_name=_("Tuition fee currency"),
+        max_length=32,
+        choices=CurrencyChoices.choices,
+        default=CurrencyChoices.USD,
     )
     intake_months = ModifiedArrayField(
         verbose_name=_("Intake months"),
@@ -138,3 +147,21 @@ class UniversityCourse(BaseModel):
 
     def __str__(self):
         return f"# {self.id} - {self.name}"
+
+
+class CourseAdmissionRequirement(BaseModel):
+    university_course = models.ForeignKey(
+        verbose_name=_("University course"),
+        to=UniversityCourse,
+        on_delete=models.CASCADE,
+        related_name="admission_requirements",
+    )
+    requirement = models.CharField(verbose_name=_("Requirement"), max_length=255, choices=RequiredDocumentTypes.choices)
+    description = models.CharField(verbose_name=_("Description"), max_length=255, blank=True, null=True)
+
+    class Meta:
+        verbose_name = _("Course admission requirement")
+        verbose_name_plural = _("Course admission requirements")
+
+    def __str__(self):
+        return self.requirement

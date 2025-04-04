@@ -1,9 +1,9 @@
-from ckeditor.fields import RichTextField
 from django import forms
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from solo.models import SingletonModel
+from tinymce.models import HTMLField
 
 
 class BaseModel(models.Model):
@@ -81,7 +81,7 @@ class Region(BaseModel):
 
 
 class TermsAndConditions(SingletonModel):
-    terms = RichTextField(_("Terms and conditions"))
+    terms = HTMLField(_("Terms and conditions"))
 
     class Meta:
         verbose_name = _("Terms and conditions")
@@ -92,7 +92,7 @@ class TermsAndConditions(SingletonModel):
 
 
 class PrivacyPolicy(SingletonModel):
-    policy = RichTextField(_("Privacy policy"))
+    policy = HTMLField(_("Privacy policy"))
 
     class Meta:
         verbose_name = _("Privacy policy")
@@ -103,10 +103,10 @@ class PrivacyPolicy(SingletonModel):
 
 
 class AboutUs(SingletonModel):
-    find_university = RichTextField(_("Find the right university"))
-    our_services = RichTextField(_("Our services"))
+    find_university = HTMLField(_("Find the right university"))
+    our_services = HTMLField(_("Our services"))
     card_title = models.CharField(_("Card title"), max_length=255, null=True, blank=True)
-    card_body = RichTextField(_("Card body"), null=True, blank=True)
+    card_body = HTMLField(_("Card body"), null=True, blank=True)
 
     class Meta:
         verbose_name = _("About us")

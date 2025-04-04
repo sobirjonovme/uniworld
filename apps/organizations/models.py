@@ -1,6 +1,6 @@
-from ckeditor.fields import RichTextField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from tinymce.models import HTMLField
 
 from apps.common.models import BaseModel
 
@@ -8,7 +8,7 @@ from apps.common.models import BaseModel
 # Create your models here.
 class Agency(BaseModel):
     name = models.CharField(verbose_name=_("Name"), max_length=255)
-    about = RichTextField(verbose_name=_("About"), blank=True, null=True)
+    about = HTMLField(verbose_name=_("About"), blank=True, null=True)
     address = models.CharField(verbose_name=_("Address"), max_length=255, blank=True, null=True)
     phone_number = models.CharField(verbose_name=_("Phone number"), max_length=255, blank=True, null=True)
     email = models.EmailField(verbose_name=_("Email"), max_length=255, blank=True, null=True)

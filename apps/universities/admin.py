@@ -1,11 +1,11 @@
 from django.contrib import admin
-from modeltranslation.admin import TranslationAdmin, TranslationStackedInline
+from modeltranslation.admin import TranslationAdmin
+from nested_inline.admin import NestedModelAdmin, NestedStackedInline
 
-from apps.django_admin_inline_paginator.admin import \
-    StackedInlinePaginatedMixin
 from apps.users.choices import UserRoles
 
-from .models import RequiredDocument, Specialty, University, UniversityCourse
+from .models import (CourseAdmissionRequirement, RequiredDocument, Specialty,
+                     University, UniversityCourse)
 
 
 # Register your models here.
@@ -14,15 +14,23 @@ class RequiredDocumentInline(admin.TabularInline):
     extra = 0
 
 
-class UniversityCourseInline(StackedInlinePaginatedMixin, TranslationStackedInline):
+class CourseAdmissionRequirementInline(NestedStackedInline):
+    model = CourseAdmissionRequirement
+    extra = 1
+    fk_name = "university_course"
+    ordering = ("-id",)
+
+
+class UniversityCourseInline(NestedStackedInline):
     model = UniversityCourse
+    inlines = (CourseAdmissionRequirementInline,)
     extra = 0
     ordering = ("-id",)
     per_page = 5
 
 
 @admin.register(University)
-class UniversityAdmin(TranslationAdmin):
+class UniversityAdmin(NestedModelAdmin, TranslationAdmin):
     list_display = ("id", "name", "country", "agency", "full_scolarship", "is_featured")
     list_display_links = ("id", "name")
     search_fields = ("name", "name_uz", "name_en", "name_ru")
@@ -54,13 +62,14 @@ class SpecialtyAdmin(TranslationAdmin):
 
 
 @admin.register(UniversityCourse)
-class UniversityCourseAdmin(TranslationAdmin):
+class UniversityCourseAdmin(NestedModelAdmin):
     list_display = ("id", "name", "university", "specialty", "qualification_level", "study_type")
     list_display_links = ("id", "name")
     search_fields = ("name", "name_uz", "name_en", "name_ru")
     list_filter = ("study_type", "qualification_level", "university")
     autocomplete_fields = ("university", "specialty")
     ordering = ("-id",)
+    inlines = (CourseAdmissionRequirementInline,)
 
     def get_queryset(self, request):
         user = request.user

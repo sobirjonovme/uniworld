@@ -18,6 +18,7 @@ class UniversityListSerializer(serializers.ModelSerializer):
             "image",
             "is_featured",
             "full_scolarship",
+            "free_consultation",
             "country",
             "course_count",
         )

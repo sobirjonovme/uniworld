@@ -13,5 +13,6 @@ class UniversityCourseListSerializer(serializers.ModelSerializer):
             "study_type",
             "qualification_level",
             "tuition_fee",
+            "tuition_fee_currency",
             "intake_months",
         )

@@ -14,13 +14,15 @@ class StudyTypes(models.TextChoices):
 
 
 class QualificationLevels(models.TextChoices):
-    FOUNDATION = "foundation", _("Foundation")
+    # FOUNDATION = "foundation", _("Foundation")
     CERTIFICATE = "certificate", _("Certificate")
+    COURSE = "course", _("Course")
     BACHELOR = "bachelor", _("Bachelor")
     DIPLOMA = "diploma", _("Diploma")
     MASTER = "master", _("Master")
-    UNDERGRADUATE = "undergraduate", _("Undergraduate")
-    POSTGRADUATE = "postgraduate", _("Postgraduate")
+    PHD = "phd", _("PhD")
+    # UNDERGRADUATE = "undergraduate", _("Undergraduate")
+    # POSTGRADUATE = "postgraduate", _("Postgraduate")
 
 
 class RequiredDocumentTypes(models.TextChoices):
