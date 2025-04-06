@@ -64,8 +64,6 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "drf_yasg",
     "corsheaders",
-    # "ckeditor",
-    # "ckeditor_uploader",
     "django_jsonform",
     "tinymce",
     "nested_inline",
