@@ -1,6 +1,7 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin, TranslationStackedInline
-from nested_inline.admin import NestedModelAdmin, NestedStackedInline
+from nested_inline.admin import (NestedModelAdmin, NestedStackedInline,
+                                 NestedTabularInline)
 
 from apps.users.choices import UserRoles
 
@@ -9,7 +10,7 @@ from .models import (CourseAdmissionRequirement, RequiredDocument, Specialty,
 
 
 # Register your models here.
-class RequiredDocumentInline(admin.TabularInline):
+class RequiredDocumentInline(NestedTabularInline):
     model = RequiredDocument
     extra = 0
 
@@ -24,7 +25,7 @@ class CourseAdmissionRequirementInline(NestedStackedInline):
 class UniversityCourseInline(NestedStackedInline, TranslationStackedInline):
     model = UniversityCourse
     inlines = (CourseAdmissionRequirementInline,)
-    extra = 5
+    extra = 1
     ordering = ("-id",)
 
 
