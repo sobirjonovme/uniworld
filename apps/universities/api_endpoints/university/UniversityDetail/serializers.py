@@ -43,6 +43,7 @@ class UniversityDetailSerializer(serializers.ModelSerializer):
             "students_count",
             "address",
             "about",
+            "more_courses",
             "scholarship_description",
             "intake_months",
             "tuition_fee",
