@@ -60,6 +60,7 @@ class University(BaseModel):
     students_count = models.CharField(verbose_name=_("Students count"), max_length=255, blank=True, null=True)
     address = models.CharField(verbose_name=_("Address"), max_length=255, blank=True, null=True)
     about = HTMLField(verbose_name=_("About"), blank=True, null=True)
+    more_courses = models.URLField(verbose_name=_("More Courses"), null=True, blank=True)
     full_scolarship = models.BooleanField(verbose_name=_("Full scholarship"), default=False)
     is_featured = models.BooleanField(verbose_name=_("Is featured"), default=False)
     free_consultation = models.BooleanField(verbose_name=_("Free consultation"), default=False)
