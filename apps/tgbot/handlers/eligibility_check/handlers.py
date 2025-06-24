@@ -1,3 +1,4 @@
+from django.template.defaultfilters import first
 from django.utils.translation import gettext as _
 from telegram import ReplyKeyboardRemove, Update
 from telegram.ext import CallbackContext
@@ -7,6 +8,9 @@ from apps.tgbot.handlers.utils.states import state
 from apps.tgbot.services.eligibility_check import \
     send_eligibility_check_application_message_to_group
 from apps.users.models import User
+from apps.universities.models import Specialty
+from apps.applications.models import AdvisorApplication
+from apps.applications.choices import AdvisorApplicationType
 
 from .keyboards import (get_current_education_level_buttons,
                         get_needed_education_level_buttons,
@@ -156,6 +160,20 @@ def get_certificate(update: Update, context: CallbackContext, user: User):
     data["username"] = update.effective_user.username
 
     send_eligibility_check_application_message_to_group(user_data=data)
+
+    # create AdvisorApplication object
+    AdvisorApplication.objects.create(
+        type=AdvisorApplicationType.ELIGIBILITY_CHECK,
+        first_name=data["full_name"],
+        last_name="",
+        phone_number=data["phone_number"],
+        age=data["age"],
+        current_education_level=data["current_education_level"],
+        needed_education_level=data["needed_education_level"],
+        needed_specialty=Specialty.objects.get(name=data["program"]),
+        gpa=data["gpa"],
+        certificates=[{"certificate": data["certificate"]}],
+    )
 
     msg = str(
         _(

@@ -11,11 +11,12 @@ from .models import AdvisorApplication, Application, ContactUsApplication
 # Register your models here.
 @admin.register(Application)
 class ApplicationAdmin(admin.ModelAdmin):
-    list_display = ("id", "first_name", "last_name", "phone_number", "university", "status_", "sent_telegram")
+    list_display = ("id", "first_name", "last_name", "phone_number", "university", "status_", "sent_telegram", "created_at")
     list_display_links = ("id", "first_name", "last_name")
     search_fields = ("first_name", "last_name", "phone_number")
     autocomplete_fields = ("university", "course", "agency", "region", "operator")
     list_filter = ("status", "sent_telegram")
+    readonly_fields = ("created_at", "updated_at")
 
     def status_(self, obj):
         status_colors = {
@@ -78,7 +79,7 @@ class ApplicationAdmin(admin.ModelAdmin):
 
 @admin.register(AdvisorApplication)
 class AdvisorApplicationAdmin(admin.ModelAdmin):
-    list_display = ("id", "first_name", "last_name", "phone_number", "country", "region", "status_", "sent_telegram")
+    list_display = ("id", "first_name", "last_name", "phone_number", "country", "region", "status_", "sent_telegram", "created_at")
     list_display_links = ("id", "first_name", "last_name")
     search_fields = ("first_name", "last_name", "phone_number")
     autocomplete_fields = ("country", "region", "agency", "needed_specialty")
@@ -114,6 +115,8 @@ class AdvisorApplicationAdmin(admin.ModelAdmin):
             "last_name",
             "phone_number",
             "sent_telegram",
+            "created_at",
+            "updated_at",
         ]
 
         if obj.type == AdvisorApplicationType.SPEAK_WITH_ADVISOR:

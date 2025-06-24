@@ -1,5 +1,4 @@
 from django.utils.translation import gettext as _
-from telegram import ParseMode
 
 from apps.applications.choices import (AdvisorApplicationStatus,
                                        AdvisorApplicationType)
@@ -90,7 +89,7 @@ def send_advice_request_info_to_operator(advice_request):
             chat_id=chat_id,
             text=message,
             reply_markup=buttons,
-            parse_mode=ParseMode.HTML,
+            parse_mode="html",
         )
     except Exception:
         # TODO: log exception

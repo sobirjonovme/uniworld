@@ -33,10 +33,9 @@ class ApplicationCreateSerializer(serializers.ModelSerializer):
         application.operator = operator
         application.save()
 
-        if operator:
-            try:
-                send_application_info_to_operator(application)
-            except Exception:
-                pass
+        try:
+            send_application_info_to_operator(application)
+        except Exception:
+            pass
 
         return application

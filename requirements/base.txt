@@ -13,6 +13,7 @@ Pillow==10.2.0
 django-ckeditor==6.7.1
 django-resized==1.0.2
 python-telegram-bot==13.15  # last sync version
+urllib3>=1.25.4,<2.0
 django-jsonform==2.22.0
 django-tinymce==4.1.0
 django-nested-inline==0.4.6
