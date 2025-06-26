@@ -3,43 +3,43 @@ from django.utils.translation import gettext_lazy as _
 
 
 class ApplicationStatus(models.TextChoices):
-    RECEIVED = "RECEIVED", _("Received")
-    IN_PROGRESS = "IN_PROGRESS", _("In Progress")
-    FINISHED = "FINISHED", _("Finished")
-    CANCELLED = "CANCELLED", _("Cancelled")
+    RECEIVED = "received", _("Received")
+    IN_PROGRESS = "in_progress", _("In Progress")
+    FINISHED = "finished", _("Finished")
+    CANCELLED = "cancelled", _("Cancelled")
 
 
 class AdvisorApplicationType(models.TextChoices):
-    ELIGIBILITY_CHECK = "ELIGIBILITY_CHECK", _("Eligibility Check")
-    SPEAK_WITH_ADVISOR = "SPEAK_WITH_ADVISOR", _("Speak with Advisor")
+    ELIGIBILITY_CHECK = "eligibility_check", _("Eligibility Check")
+    SPEAK_WITH_ADVISOR = "speak_with_advisor", _("Speak with Advisor")
 
 
 class AdvisorApplicationStatus(models.TextChoices):
-    NEW = "NEW", _("New")
-    TALKED = "TALKED", _("Talked")
-    NOT_INTERESTED = "NOT_INTERESTED", _("Not Interested")
+    NEW = "new", _("New")
+    TALKED = "talked", _("Talked")
+    NOT_INTERESTED = "not_interested", _("Not Interested")
 
 
 class WhoAreYouChoices(models.TextChoices):
-    STUDENT = "STUDENT", _("Student")
-    PARENT = "PARENT", _("Parent")
+    STUDENT = "student", _("Student")
+    PARENT = "parent", _("Parent")
 
 
 class CurrentEducationLevelChoices(models.TextChoices):
-    HIGH_SCHOOL = "HIGH_SCHOOL", _("High School")
-    BACHELOR = "BACHELOR", _("Bachelor")
+    HIGH_SCHOOL = "high_school", _("High School")
+    BACHELOR = "bachelor", _("Bachelor")
 
 
 class NeededEducationLevelChoices(models.TextChoices):
-    BACHELOR = "BACHELOR", _("Bachelor")
-    MASTER = "MASTER", _("Master")
+    BACHELOR = "bachelor", _("Bachelor")
+    MASTER = "master", _("Master")
 
 
 class CertificateChoices(models.TextChoices):
-    IELTS = "IELTS", _("IELTS")
-    TOEFL = "TOEFL", _("TOEFL")
-    SAT = "SAT", _("SAT")
-    GMAT = "GMAT", _("GMAT")
+    IELTS = "ielts", _("IELTS")
+    TOEFL = "toefl", _("TOEFL")
+    SAT = "sat", _("SAT")
+    GMAT = "gmat", _("GMAT")
 
     @classmethod
     def get_choices_schema(cls):
@@ -47,8 +47,9 @@ class CertificateChoices(models.TextChoices):
 
 
 class ContactUsInquiryType(models.TextChoices):
-    NEED_HELP = "NEED_HELP", _("Need Help")
-    COMPLAINT = "COMPLAINT", _("Complaint")
+    NEED_HELP = "need_help", _("Need Help")
+    COMPLAINT = "complaint", _("Complaint")
+
 
 CERTIFICATES_SCHEMA = {
     "type": "list",

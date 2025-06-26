@@ -8,32 +8,32 @@ from .serializers import AdvisorApplicationCreateSerializer
 class AdvisorApplicationCreateAPIView(CreateAPIView):
     """
     API endpoint that allows to create advisor application.
-    <h2> if type is SPEAK_WITH_ADVISOR, request body example:</h2>
+    <h2> if type is speak_with_advisor, request body example:</h2>
     <pre>
     <code>
         {
-            "type": "SPEAK_WITH_ADVISOR",
+            "type": "speak_with_advisor",
             "first_name": "John",
             "last_name": "Doe",
             "phone_number": "+998990070101",
-            "who_are_you": "STUDENT",
+            "who_are_you": "student",
             "country": 1,
             "region": 1
         }
     <br></code>
     </pre>
 
-    <h2> if type is ELIGIBILITY_CHECK, request body example:</h2>
+    <h2> if type is eligibility_check, request body example:</h2>
     <pre>
     <code>
         {
-            "type": "ELIGIBILITY_CHECK",
+            "type": "eligibility_check",
             "first_name": "John",
             "last_name": "Doe",
             "phone_number": "+998990070101",
             "age": 21,
-            "current_education_level": "HIGH_SCHOOL",
-            "needed_education_level": "BACHELOR",
+            "current_education_level": "high_school",
+            "needed_education_level": "bachelor",
             "needed_specialty": 5,
             "gpa": "4.2/5.0"
         }

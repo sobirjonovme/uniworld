@@ -8,8 +8,8 @@ from apps.common.models import BaseModel
 
 from .choices import (CERTIFICATES_SCHEMA, AdvisorApplicationStatus,
                       AdvisorApplicationType, ApplicationStatus,
-                      CurrentEducationLevelChoices,
-                      NeededEducationLevelChoices, WhoAreYouChoices, ContactUsInquiryType)
+                      ContactUsInquiryType, CurrentEducationLevelChoices,
+                      NeededEducationLevelChoices, WhoAreYouChoices)
 
 
 # Create your models here.
@@ -101,6 +101,9 @@ class AdvisorApplication(BaseModel):
     )
     gpa = models.CharField(verbose_name=_("GPA"), max_length=63, null=True, blank=True)
     certificates = JSONField(verbose_name=_("Certificates"), schema=CERTIFICATES_SCHEMA, null=True, blank=True)
+    matched_universities = models.ManyToManyField(
+        verbose_name=_("Matched Universities"), to="universities.University", blank=True
+    )
 
     class Meta:
         verbose_name = _("Request for Advise")
@@ -138,9 +141,7 @@ class ContactUsApplication(BaseModel):
     last_name = models.CharField(verbose_name=_("Last Name"), max_length=255)
     telegram_username = models.CharField(verbose_name=_("Telegram Username"), max_length=255)
     phone_number = models.CharField(verbose_name=_("Phone Number"), max_length=31)
-    inquiry_type = models.CharField(
-        verbose_name=_("Inquiry Type"), max_length=31, choices=ContactUsInquiryType.choices
-    )
+    inquiry_type = models.CharField(verbose_name=_("Inquiry Type"), max_length=31, choices=ContactUsInquiryType.choices)
     consulting_agency = models.ForeignKey(
         verbose_name=_("Consulting Agency"), to="organizations.Agency", on_delete=models.SET_NULL, null=True, blank=True
     )

@@ -1,16 +1,16 @@
-from django.template.defaultfilters import first
 from django.utils.translation import gettext as _
 from telegram import ReplyKeyboardRemove, Update
 from telegram.ext import CallbackContext
 
+from apps.applications.choices import AdvisorApplicationType
+from apps.applications.models import AdvisorApplication
+from apps.applications.services.matcher import get_matched_universities
 from apps.tgbot.handlers.utils.decorators import get_user
 from apps.tgbot.handlers.utils.states import state
 from apps.tgbot.services.eligibility_check import \
     send_eligibility_check_application_message_to_group
-from apps.users.models import User
 from apps.universities.models import Specialty
-from apps.applications.models import AdvisorApplication
-from apps.applications.choices import AdvisorApplicationType
+from apps.users.models import User
 
 from .keyboards import (get_current_education_level_buttons,
                         get_needed_education_level_buttons,
@@ -162,7 +162,7 @@ def get_certificate(update: Update, context: CallbackContext, user: User):
     send_eligibility_check_application_message_to_group(user_data=data)
 
     # create AdvisorApplication object
-    AdvisorApplication.objects.create(
+    application = AdvisorApplication.objects.create(
         type=AdvisorApplicationType.ELIGIBILITY_CHECK,
         first_name=data["full_name"],
         last_name="",
@@ -175,12 +175,19 @@ def get_certificate(update: Update, context: CallbackContext, user: User):
         certificates=[{"certificate": data["certificate"]}],
     )
 
-    msg = str(
-        _(
-            "Rahmat! Sizning ma'lumotlaringiz qabul qilindi.\n\n"
-            "Bizning mutaxassislarimiz sizga eng mos keluvchi o'quv muassasini topib, tez orada siz bilan bog'lanishadi"
+    matched_universities = get_matched_universities(application)
+    application.matched_universities.set(matched_universities)
+
+    if matched_universities:
+        universities_list = "\n".join(
+            [f"{university.name} - {university.country.name}" for university in matched_universities]
         )
-    )
+        msg = str(_("Siz uchun eng mos keluvchi o'quv muassasalari:\n\n" "<code>{}</code>\n\n")).format(
+            universities_list
+        )
+    else:
+        msg = str(_("Siz uchun mos keluvchi o'quv muassasalar topilmadi."))
+
     context.bot.send_message(
         chat_id=update.message.chat_id,
         text=msg,

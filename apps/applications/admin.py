@@ -11,7 +11,16 @@ from .models import AdvisorApplication, Application, ContactUsApplication
 # Register your models here.
 @admin.register(Application)
 class ApplicationAdmin(admin.ModelAdmin):
-    list_display = ("id", "first_name", "last_name", "phone_number", "university", "status_", "sent_telegram", "created_at")
+    list_display = (
+        "id",
+        "first_name",
+        "last_name",
+        "phone_number",
+        "university",
+        "status_",
+        "sent_telegram",
+        "created_at",
+    )
     list_display_links = ("id", "first_name", "last_name")
     search_fields = ("first_name", "last_name", "phone_number")
     autocomplete_fields = ("university", "course", "agency", "region", "operator")
@@ -79,7 +88,17 @@ class ApplicationAdmin(admin.ModelAdmin):
 
 @admin.register(AdvisorApplication)
 class AdvisorApplicationAdmin(admin.ModelAdmin):
-    list_display = ("id", "first_name", "last_name", "phone_number", "country", "region", "status_", "sent_telegram", "created_at")
+    list_display = (
+        "id",
+        "first_name",
+        "last_name",
+        "phone_number",
+        "country",
+        "region",
+        "status_",
+        "sent_telegram",
+        "created_at",
+    )
     list_display_links = ("id", "first_name", "last_name")
     search_fields = ("first_name", "last_name", "phone_number")
     autocomplete_fields = ("country", "region", "agency", "needed_specialty")
@@ -136,6 +155,7 @@ class AdvisorApplicationAdmin(admin.ModelAdmin):
                     "needed_specialty",
                     "gpa",
                     "certificates",
+                    "matched_universities",
                 ]
             )
 
@@ -163,6 +183,7 @@ class AdvisorApplicationAdmin(admin.ModelAdmin):
                 "needed_education_level",
                 "needed_specialty",
                 "gpa",
+                "matched_universities",
             ]
             readonly_fields.extend(extra_readonly_fields)
 
